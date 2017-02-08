@@ -10,7 +10,7 @@ gem install frontapp
 
 ## Usage
 
-The auth_token can be obtained from Frontapp, in Settings -> API & Integrations -& API
+The auth_token can be obtained from Frontapp, in Settings -> API & Integrations -> API
 
 Create a Frontapp client
 ```ruby
