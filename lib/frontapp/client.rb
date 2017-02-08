@@ -38,7 +38,7 @@ module Frontapp
     def list(path, params = {})
       items = []
       last_page = false
-      query = params.map {|k,v| "#{k}=#{URI.encode(v)}"}.join('&')
+      query = format_query(params)
       url = "#{base_url}#{path}?#{query}"
       until last_page
         res = @headers.get(url)
@@ -80,7 +80,25 @@ module Frontapp
       if !res.status.success?
         raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
       end
-    end    
+    end
+
+  private
+    def format_query(params)
+      res = []
+      q = params.delete(:q)
+      if q && q.is_a?(Hash)
+        res << q.map do |k, v|
+          case v
+          when Symbol, String
+            "q[#{k}][]=#{URI.encode(v)}"
+          when Array then
+            v.map { |c| "q[#{k}][]=#{URI.encode(c)}" }.join("&")
+          end
+        end
+      end
+      res << params.map {|k,v| "#{k}=#{URI.encode(v)}"}
+      res.join("&")
+    end
 
     def base_url
       "https://api2.frontapp.com/"
