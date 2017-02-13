@@ -23,6 +23,7 @@ module Frontapp
     include Frontapp::Client::Conversations
     include Frontapp::Client::Events
     include Frontapp::Client::Inboxes
+    include Frontapp::Client::Messages
     include Frontapp::Client::Rules
     include Frontapp::Client::Tags
     include Frontapp::Client::Teammates
