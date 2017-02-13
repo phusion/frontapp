@@ -93,7 +93,7 @@ module Frontapp
       # subject               string (optional)  Subject of the message
       # body                  string             Body of the message
       # body_format           enum (optional)    Format of the message body. (Default: 'markdown')
-      # metadata              object (optional) 
+      # metadata              object (optional)
       # metadata.thread_ref   string (optional)  Custom reference which will be used to thread messages. If you ommit this field, we’ll thread by sender instead
       # metadata.headers      object (optional)  Custom object where any internal information can be stored
       # ----------------------------------------------------
@@ -115,7 +115,7 @@ module Frontapp
       # Allowed attributes:
       # Name                        Type                Description
       # -----------------------------------------------------------
-      # sender                      object  
+      # sender                      object
       # sender.handle               string              Handle used to reach the contact. Can be an email address, a twitter, handle, a phone number, …
       # sender.name                 string (optional)   Name of the contact.
       # sender.author_id            string (optional)   Id of the teammate who is the author of the message. Ignored if the message is inbound.
@@ -130,13 +130,13 @@ module Frontapp
       # type                        enum (optional)     Type of the message to import. (Default: 'email')
       # assignee_id                 string (optional)   Id of the teammate who will be assigned to the conversation.
       # tags                        array (optional)    List of tag names to add to the conversation (unknown tags will automatically be created).
-      # metadata                    object  
+      # metadata                    object
       # metadata.thread_ref         string (optional)   Custom reference which will be used to thread messages. If you ommit this field, we’ll thread by sender instead.
       # metadata.is_inbound         boolean             Whether or not the message is received (inbound) or sent (outbound) by you.
       # metadata.is_archived        boolean (optional)  Whether or not the message should be directly archived once imported. (Default: true)
       # metadata.should_skip_rules  boolean (optional)  Whether or not the rules should apply to this message. (Default: true)
       # -----------------------------------------------------------
-      def import_message(channel_id, params)
+      def import_message(inbox_id, params)
         cleaned = params.permit({ sender: [:handle, :name, :author_id] },
                                 :to,
                                 :cc,

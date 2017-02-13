@@ -238,8 +238,8 @@ conversation_reference = client.receive_custom_message("cha_55c8c149", {
   metadata: {}
 })
 
-# Import a message in a channel
-conversation_reference = client.import_message("cha_55c8c149", {
+# Import a message into an inbox
+conversation_reference = client.import_message("inb_55c8c149", {
   sender: {
     handle: "user@example.com"
   },
@@ -247,6 +247,7 @@ conversation_reference = client.import_message("cha_55c8c149", {
   cc: [],
   bcc: [],
   body: "",
+  body_format: "html",
   external_id: "",
   created_at: 1453770984.123,
   tags: [],
