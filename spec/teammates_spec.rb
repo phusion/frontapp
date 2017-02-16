@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'frontapp'
 
-RSpec.describe 'Tags' do
+RSpec.describe 'Teammates' do
 
   let(:headers) {
     {
@@ -10,62 +10,60 @@ RSpec.describe 'Tags' do
     }
   }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
-  let(:tag_id) { "tag_55c8c149" }
-  let(:all_tags_response) {
+  let(:teammate_id) { "tea_55c8c149" }
+  let(:all_teammates_response) {
     %Q{
 {
   "_links": {
-    "self": "https://api2.frontapp.com/tags"
+    "self": "https://api2.frontapp.com/teammates"
   },
   "_results": [
     {
       "_links": {
-        "self": "https://api2.frontapp.com/tags/tag_55c8c149",
+        "self": "https://api2.frontapp.com/teammates/tea_55c8c149",
         "related": {
-          "conversations": "https://api2.frontapp.com/tags/tag_55c8c149/conversations"
+          "inboxes": "https://api2.frontapp.com/teammates/tea_55c8c149/inboxes",
+          "conversations": "https://api2.frontapp.com/teammates/tea_55c8c149/conversations"
         }
       },
-      "id": "tag_55c8c149",
-      "name": "Robots"
+      "id": "tea_55c8c149",
+      "email": "leela@planet-express.com",
+      "username": "leela",
+      "first_name": "Leela",
+      "last_name": "Turanga",
+      "is_admin": true,
+      "is_available": true
     }
   ]
 }
     }
   }
-  let(:get_tag_response) {
+  let(:get_teammate_response) {
     %Q{
 {
   "_links": {
-    "self": "https://api2.frontapp.com/tags/tag_55c8c149",
+    "self": "https://api2.frontapp.com/teammates/tea_55c8c149",
     "related": {
-      "conversations": "https://api2.frontapp.com/tags/tag_55c8c149/conversations"
+      "inboxes": "https://api2.frontapp.com/teammates/tea_55c8c149/inboxes",
+      "conversations": "https://api2.frontapp.com/teammates/tea_55c8c149/conversations"
     }
   },
-  "id": "tag_55c8c149",
-  "name": "Robots"
+  "id": "tea_55c8c149",
+  "email": "leela@planet-express.com",
+  "username": "leela",
+  "first_name": "Leela",
+  "last_name": "Turanga",
+  "is_admin": true,
+  "is_available": true
 }
     }
   }
-  let(:create_tag_response) {
-    %Q{
-{
-  "_links": {
-    "self": "https://api2.frontapp.com/tags/tag_55c8c149",
-    "related": {
-      "conversations": "https://api2.frontapp.com/tags/tag_55c8c149/conversations"
-    }
-  },
-  "id": "tag_55c8c149",
-  "name": "New tag name"
-}
-    }
-  }
-  let(:tag_conversations_response) {
+  let(:get_teammate_conversations_response) {
     %Q{
 {
   "_pagination": {},
   "_links": {
-    "self": "https://api2.frontapp.com/tags/tag_55c8c149/conversations"
+    "self": "https://api2.frontapp.com/teammates/tea_55c8c149/conversations"
   },
   "_results": [
     {
@@ -181,34 +179,73 @@ RSpec.describe 'Tags' do
 }
     }
   }
+  let(:get_teammate_inboxes_response) {
+    %Q{
+{
+  "_links": {
+    "self": "https://api2.frontapp.com/teammates/tea_55c8c149/inboxes"
+  },
+  "_results": [
+    {
+      "_links": {
+        "self": "https://api2.frontapp.com/inboxes/inb_55c8c149",
+        "related": {
+          "teammates": "https://api2.frontapp.com/inboxes/inb_55c8c149/teammates",
+          "conversations": "https://api2.frontapp.com/inboxes/inb_55c8c149/conversations",
+          "channels": "https://api2.frontapp.com/inboxes/inb_55c8c149/channels"
+        }
+      },
+      "id": "inb_55c8c149",
+      "address": "team@planet-express.com",
+      "type": "smtp",
+      "name": "Team",
+      "send_as": "team@planet-express.com"
+    }
+  ]
+}
+    }
+  }
 
-  it "can get all tags" do
-    stub_request(:get, "#{base_url}/tags").
+
+  it "can get all teammates" do
+    stub_request(:get, "#{base_url}/teammates").
       with( headers: headers).
-      to_return(status: 200, body: all_tags_response)
-    frontapp.tags
+      to_return(status: 200, body: all_teammates_response)
+    frontapp.teammates
   end
 
-  it "can get a specific tag" do
-    stub_request(:get, "#{base_url}/tags/#{tag_id}").
+  it "can get a specific teammate" do
+    stub_request(:get, "#{base_url}/teammates/#{teammate_id}").
       with( headers: headers).
-      to_return(status: 200, body: get_tag_response)
-    frontapp.get_tag(tag_id)
+      to_return(status: 200, body: get_teammate_response)
+    frontapp.get_teammate(teammate_id)
   end
 
-  it "can create a tag" do
-    data = { name: "New tag name" }
-    stub_request(:post, "#{base_url}/tags").
-      with( body: data.to_json,
-            headers: headers).
-      to_return(status: 201, body: create_tag_response)
-    frontapp.create_tag!(data)
+  it "can update a teammate" do
+    data = {
+      username: "bender",
+      first_name: "Bender",
+      last_name: "Rodriguez",
+      is_admin: true,
+      is_available: false
+    }
+    stub_request(:patch, "#{base_url}/teammates/#{teammate_id}").
+      with( headers: headers).
+      to_return(status: 204)
+    frontapp.update_teammate!(teammate_id, data)
   end
 
-  it "can get all tag conversations" do
-    stub_request(:get, "#{base_url}/tags/#{tag_id}/conversations").
+  it "can get all conversations assigned to a teammate" do
+    stub_request(:get, "#{base_url}/teammates/#{teammate_id}/conversations").
       with( headers: headers).
-      to_return(status: 200, body: tag_conversations_response)
-    frontapp.get_tag_conversations(tag_id)
+      to_return(status: 200, body: get_teammate_conversations_response)
+    frontapp.get_teammate_conversations(teammate_id)
+  end
+
+  it "can get all inboxes a teammate has access to" do
+    stub_request(:get, "#{base_url}/teammates/#{teammate_id}/inboxes").
+      with( headers: headers).
+      to_return(status: 200, body: get_teammate_inboxes_response)
+    frontapp.get_teammate_inboxes(teammate_id)
   end
 end

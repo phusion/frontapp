@@ -40,7 +40,7 @@ module Frontapp
                                 :to,
                                 :cc,
                                 :bcc)
-        create("channels/{channel_id}/messages", cleaned)
+        create("channels/#{channel_id}/messages", cleaned)
       end
 
       # Parameters
@@ -74,7 +74,7 @@ module Frontapp
                                 :to,
                                 :cc,
                                 :bcc)
-        create("conversations/{conversation_id}/messages", cleaned)
+        create_without_response("conversations/#{conversation_id}/messages", cleaned)
       end
 
       # Parameters

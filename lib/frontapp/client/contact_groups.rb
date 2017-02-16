@@ -48,7 +48,7 @@ module Frontapp
       # --------------------------------------------
       def add_contacts_to_contact_group!(group_id, params = {})
         cleaned = params.permit(:contact_ids)
-        update("contact_groups/#{group_id}/contacts", cleaned)
+        create_without_response("contact_groups/#{group_id}/contacts", cleaned)
       end
     end
   end

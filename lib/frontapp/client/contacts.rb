@@ -52,7 +52,7 @@ module Frontapp
       # group_names  array (optional)    List of all the group names the contact belongs to. It will automatically create missing groups.
       # handles      array               List
       # --------------------------------------------
-      def create_contact!(contact_id, params = {})
+      def create_contact!(params = {})
         cleaned = params.permit(:name,
                                 :description,
                                 :avatar_url,
@@ -102,7 +102,7 @@ module Frontapp
       # ---------------------------
       def add_contact_handle!(contact_id, params = {})
         cleaned = params.permit(:handle, :source)
-        create("contacts/#{contact_id}/handles", cleaned)
+        create_without_response("contacts/#{contact_id}/handles", cleaned)
       end
 
       # Parameters
@@ -144,7 +144,7 @@ module Frontapp
       # body       string  Content of the note
       # ------------------------------
       def add_contact_note!(contact_id, params = {})
-        cleaned = params.permit(:handle, :source)
+        cleaned = params.permit(:author_id, :body)
         create("contacts/#{contact_id}/notes", cleaned)
       end
 

@@ -103,3 +103,11 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+def base_url
+  "https://api2.frontapp.com"
+end
+
+def auth_token
+  ""
+end

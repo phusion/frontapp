@@ -44,7 +44,7 @@ module Frontapp
       # Allowed params:
       # Name        Type               Description
       # ----------------------------------------------
-      # q           object (optional)  Search query. 
+      # q           object (optional)  Search query.
       # q.statuses  array (optional)   List of the statuses of the conversations you want to list
       # ----------------------------------------------
       def get_teammate_conversations(teammate_id, params = {})
