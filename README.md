@@ -90,7 +90,7 @@ client.update_contact!("ctc_55c8c149", {
 })
 
 # Create a new contact
-contact = client.create_contact!("ctc_55c8c149", {
+contact = client.create_contact!({
 	name: "Name",
 	description: "Description",
 	avatar_url: "http://example.com/avatar",
