@@ -14,4 +14,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'http', '>= 2.2.1'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'webmock'
+  s.add_development_dependency 'rake', '~> 12.0'
 end
