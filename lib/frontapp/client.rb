@@ -12,6 +12,7 @@ require_relative 'client/messages.rb'
 require_relative 'client/rules.rb'
 require_relative 'client/tags.rb'
 require_relative 'client/teammates.rb'
+require_relative 'error.rb'
 
 module Frontapp
   class Client
@@ -43,6 +44,7 @@ module Frontapp
       url = "#{base_url}#{path}?#{query}"
       until last_page
         res = @headers.get(url)
+        decode_status(res)
         response = JSON.parse(res.to_s)
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]
@@ -57,11 +59,13 @@ module Frontapp
 
     def get(path)
       res = @headers.get("#{base_url}#{path}")
+      decode_status(res)
       JSON.parse(res.to_s)
     end
 
     def create(path, body)
       res = @headers.post("#{base_url}#{path}", json: body)
+      decode_status(res)
       response = JSON.parse(res.to_s)
       if !res.status.success?
         raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
@@ -71,6 +75,7 @@ module Frontapp
 
     def create_without_response(path, body)
       res = @headers.post("#{base_url}#{path}", json: body)
+      decode_status(res)
       if !res.status.success?
         raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
       end
@@ -78,6 +83,7 @@ module Frontapp
 
     def update(path, body)
       res = @headers.patch("#{base_url}#{path}", json: body)
+      decode_status(res)
       if !res.status.success?
         raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
       end
@@ -85,6 +91,7 @@ module Frontapp
 
     def delete(path, body = {})
       res = @headers.delete("#{base_url}#{path}", json: body)
+      decode_status(res)
       if !res.status.success?
         raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
       end
@@ -112,5 +119,15 @@ module Frontapp
       "https://api2.frontapp.com/"
     end
 
+    def decode_status(response)
+      if response.status == 429
+        context = {}
+        %w[Retry-After X-RateLimit-Limit X-RateLimit-Remaining X-RateLimit-Reset].each do |header|
+          context[header] = response.headers[header]
+        end
+
+        raise RateLimitError.new(429, context)
+      end
+    end
   end
 end
