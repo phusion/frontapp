@@ -8,7 +8,7 @@ module Frontapp
       # message_id  string  Id of the requested message
       # -------------------------------
       def get_message(message_id)
-        get("messages/#{message_id}")
+        get("/messages/#{message_id}")
       end
 
       # Parameters
@@ -40,7 +40,7 @@ module Frontapp
                                 :to,
                                 :cc,
                                 :bcc)
-        create("channels/#{channel_id}/messages", cleaned)
+        create("/channels/#{channel_id}/messages", cleaned)
       end
 
       # Parameters
@@ -74,7 +74,7 @@ module Frontapp
                                 :to,
                                 :cc,
                                 :bcc)
-        create_without_response("conversations/#{conversation_id}/messages", cleaned)
+        create_without_response("/conversations/#{conversation_id}/messages", cleaned)
       end
 
       # Parameters
@@ -103,7 +103,7 @@ module Frontapp
                                 :body,
                                 :body_format,
                                 { metadata: [:thread_ref, :headers] })
-        create("channels/#{channel_id}/incoming_messages", cleaned)
+        create("/channels/#{channel_id}/incoming_messages", cleaned)
       end
 
       # Parameters
@@ -150,7 +150,7 @@ module Frontapp
                                 :assignee_id,
                                 :tags,
                                 { metadata: [:thread_ref, :is_inbound, :is_archived, :should_skip_rules] })
-        create("inboxes/#{inbox_id}/imported_messages", cleaned)
+        create("/inboxes/#{inbox_id}/imported_messages", cleaned)
       end
     end
   end

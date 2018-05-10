@@ -3,7 +3,7 @@ module Frontapp
     module Conversations
 
       def conversations(params = {})
-        list("conversations", params)
+        list("/conversations", params)
       end
 
       # Parameters
@@ -12,7 +12,7 @@ module Frontapp
       # conversation_id  string  Id of the requested conversation
       # ------------------------------------
       def get_conversation(conversation_id)
-        get("conversations/#{conversation_id}")
+        get("/conversations/#{conversation_id}")
       end
 
       # Parameters
@@ -31,7 +31,7 @@ module Frontapp
       # The assignee id is their Frontapp handle, e.g. @username
       def update_conversation!(conversation_id, params = {})
         cleaned = params.permit(:assignee_id, :status, :tags)
-        update("conversations/#{conversation_id}", cleaned)
+        update("/conversations/#{conversation_id}", cleaned)
       end
 
       # Parameters
@@ -40,7 +40,7 @@ module Frontapp
       # conversation_id  string  Id or email of the requested conversation
       # --------------------------------
       def get_conversation_inboxes(conversation_id)
-        get("conversations/#{conversation_id}/inboxes")
+        get("/conversations/#{conversation_id}/inboxes")
       end
 
       # Parameters
@@ -49,7 +49,7 @@ module Frontapp
       # conversation_id  string  Id or email of the requested conversation
       # --------------------------------
       def get_conversation_followers(conversation_id)
-        get("conversations/#{conversation_id}/followers")
+        get("/conversations/#{conversation_id}/followers")
       end
 
       # Parameters
@@ -58,7 +58,7 @@ module Frontapp
       # conversation_id  string  Id or email of the requested conversation
       # --------------------------------
       def get_conversation_events(conversation_id)
-        list("conversations/#{conversation_id}/events")
+        list("/conversations/#{conversation_id}/events")
       end
 
       # Parameters
@@ -67,7 +67,7 @@ module Frontapp
       # conversation_id  string  Id or email of the requested conversation
       # --------------------------------
       def get_conversation_messages(conversation_id)
-        list("conversations/#{conversation_id}/messages")
+        list("/conversations/#{conversation_id}/messages")
       end
     end
   end

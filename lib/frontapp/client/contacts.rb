@@ -3,7 +3,7 @@ module Frontapp
     module Contacts
 
       def contacts(params = {})
-        list("contacts", params)
+        list("/contacts", params)
       end
 
       # Parameters
@@ -12,7 +12,7 @@ module Frontapp
       # contact_id  string  Id or alias of the requested contact
       # -------------------------------
       def get_contact(contact_id)
-        get("contacts/#{contact_id}")
+        get("/contacts/#{contact_id}")
       end
 
       # Parameters
@@ -38,7 +38,7 @@ module Frontapp
                                 :is_spammer,
                                 :links,
                                 :group_names)
-        update("contacts/#{contact_id}", cleaned)
+        update("/contacts/#{contact_id}", cleaned)
       end
 
       # Allowed attributes:
@@ -60,7 +60,7 @@ module Frontapp
                                 :links,
                                 :group_names,
                                 :handles)
-        create("contacts", cleaned)
+        create("/contacts", cleaned)
       end
 
       # Name        Type    Description
@@ -68,7 +68,7 @@ module Frontapp
       # contact_id  string  Id or alias of the requested contact
       # -------------------------------
       def delete_contact!(contact_id)
-        delete("contacts/#{contact_id}")
+        delete("/contacts/#{contact_id}")
       end
 
       # Parameters
@@ -85,7 +85,7 @@ module Frontapp
       # ----------------------------------------------
       def get_contact_conversations(contact_id, params = {})
         cleaned = params.permit({ q: [:statuses] })
-        list("contacts/#{contact_id}/conversations", cleaned)
+        list("/contacts/#{contact_id}/conversations", cleaned)
       end
 
       # Parameters
@@ -102,7 +102,7 @@ module Frontapp
       # ---------------------------
       def add_contact_handle!(contact_id, params = {})
         cleaned = params.permit(:handle, :source)
-        create_without_response("contacts/#{contact_id}/handles", cleaned)
+        create_without_response("/contacts/#{contact_id}/handles", cleaned)
       end
 
       # Parameters
@@ -119,7 +119,7 @@ module Frontapp
       # ---------------------------
       def delete_contact_handle!(contact_id, params = {})
         cleaned = params.permit(:handle, :source)
-        delete("contacts/#{contact_id}/handles", cleaned)
+        delete("/contacts/#{contact_id}/handles", cleaned)
       end
 
       # Parameters
@@ -128,7 +128,7 @@ module Frontapp
       # contact_id  string  Id or alias of the requested contact
       # -------------------------------
       def get_contact_notes(contact_id)
-        list("contacts/#{contact_id}/notes")
+        list("/contacts/#{contact_id}/notes")
       end
 
       # Parameters
@@ -145,7 +145,7 @@ module Frontapp
       # ------------------------------
       def add_contact_note!(contact_id, params = {})
         cleaned = params.permit(:author_id, :body)
-        create("contacts/#{contact_id}/notes", cleaned)
+        create("/contacts/#{contact_id}/notes", cleaned)
       end
 
     end

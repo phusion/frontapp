@@ -5,7 +5,8 @@ RSpec.describe 'Contacts' do
 
   let(:headers) {
     {
-      "Accept" => "application/json",
+      'Accept' => "application/json",
+
       "Authorization" => "Bearer #{auth_token}",
     }
   }

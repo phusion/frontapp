@@ -3,7 +3,7 @@ module Frontapp
     module Teammates
 
       def teammates(params = {})
-        list("teammates", params)
+        list("/teammates", params)
       end
 
       # Parameters
@@ -12,7 +12,7 @@ module Frontapp
       # teammate_id  string  Id or email of the requested teammate
       # --------------------------------
       def get_teammate(teammate_id)
-        get("teammates/#{teammate_id}")
+        get("/teammates/#{teammate_id}")
       end
 
       # Parameters
@@ -32,7 +32,7 @@ module Frontapp
       # ----------------------------------------------
       def update_teammate!(teammate_id, params = {})
         cleaned = params.permit(:username, :first_name, :last_name, :is_admin, :is_available)
-        update("teammates/#{teammate_id}", cleaned)
+        update("/teammates/#{teammate_id}", cleaned)
       end
 
       # Parameters
@@ -49,7 +49,7 @@ module Frontapp
       # ----------------------------------------------
       def get_teammate_conversations(teammate_id, params = {})
         cleaned = params.permit({ q: [:statuses] })
-        list("teammates/#{teammate_id}/conversations", cleaned)
+        list("/teammates/#{teammate_id}/conversations", cleaned)
       end
 
       # Parameters
@@ -58,7 +58,7 @@ module Frontapp
       # teammate_id  string  Id or email of the requested teammate
       # --------------------------------
       def get_teammate_inboxes(teammate_id)
-        get("teammates/#{teammate_id}/inboxes")
+        get("/teammates/#{teammate_id}/inboxes")
       end
 
     end

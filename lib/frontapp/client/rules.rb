@@ -3,7 +3,7 @@ module Frontapp
     module Rules
 
       def rules(params = {})
-        list("rules", params)
+        list("/rules", params)
       end
 
       # Parameters
@@ -12,7 +12,7 @@ module Frontapp
       # rule_id  string  Id of the requested rule
       # ----------------------------
       def get_rule(rule_id)
-        get("rules/#{rule_id}")
+        get("/rules/#{rule_id}")
       end
 
     end
