@@ -51,7 +51,11 @@ module Frontapp
       until last_page
         res = self.class.get(url)
         decode_status(res)
-        response = JSON.parse(res.parsed_response) ## ??
+        response = res.parsed_response
+
+        ## ugly
+        response = JSON.parse(response) if response.is_a? String
+
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]
         if pagination.nil? || pagination["next"].nil?
@@ -66,13 +70,13 @@ module Frontapp
     def get(path)
       res = self.class.get(path)
       decode_status(res)
-      JSON.parse(res.parsed_response) ## ??
+      res.parsed_response
     end
 
     def create(path, body)
       res = self.class.post(path, body: body.to_json)
       decode_status(res)
-      response = JSON.parse(res.parsed_response) ## ??
+      response = res.parsed_response
       response
     end
 
