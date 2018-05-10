@@ -38,6 +38,7 @@ module Frontapp
 
       self.class.headers(
         'Accept' => "application/json",
+        'Content-Type' => 'application/json',
         'Authorization' => "Bearer #{auth_token}"
       )
     end
@@ -69,24 +70,24 @@ module Frontapp
     end
 
     def create(path, body)
-      res = self.class.post(path, body: body)
+      res = self.class.post(path, body: body.to_json)
       decode_status(res)
       response = JSON.parse(res.parsed_response) ## ??
       response
     end
 
     def create_without_response(path, body)
-      res = self.class.post(path, body: body)
+      res = self.class.post(path, body: body.to_json)
       decode_status(res)
     end
 
     def update(path, body)
-      res = self.class.patch(path, body: body)
+      res = self.class.patch(path, body: body.to_json)
       decode_status(res)
     end
 
     def delete(path, body = {})
-      res = self.class.delete(path, body: body)
+      res = self.class.delete(path, body: body.to_json)
       decode_status(res)
     end
 
