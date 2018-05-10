@@ -31,7 +31,7 @@ module Frontapp
 
     def initialize(options={})
       auth_token = options[:auth_token]
-      @headers = HTTP.headers({
+      @headers = HTTP.timeout(:per_operation, write: 2, connect: 5, read: 10).headers({
         Accept: "application/json",
         Authorization: "Bearer #{auth_token}"
       })
