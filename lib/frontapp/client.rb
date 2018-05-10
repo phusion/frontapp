@@ -120,7 +120,7 @@ module Frontapp
     end
 
     def decode_status(response)
-      if response.status == 429
+      if response.status.to_i == 429
         context = {}
         %w[Retry-After X-RateLimit-Limit X-RateLimit-Remaining X-RateLimit-Reset].each do |header|
           context[header] = response.headers[header]
