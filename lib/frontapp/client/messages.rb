@@ -21,6 +21,7 @@ module Frontapp
       # Name             Type                Description
       # ------------------------------------------------
       # author_id        string (optional)   Id of the teammate on behalf of whom the answer is sent
+      # sender_name      string (optional)   Name used for the sender info of the message
       # subject          string (optional)   Subject of the message for email message
       # body             string              Body of the message
       # text             string (optional)   Text version of the body for messages with non-text body
@@ -33,6 +34,7 @@ module Frontapp
       # ------------------------------------------------
       def send_message(channel_id, params)
         cleaned = params.permit(:author_id,
+                                :sender_name,
                                 :subject,
                                 :body,
                                 :text,
@@ -53,6 +55,7 @@ module Frontapp
       # Name             Type                Description
       # ------------------------------------------------
       # author_id        string (optional)   ID of the teammate on behalf of whom the answer is sent
+      # sender_name      string (optional)   Name used for the sender info of the message
       # subject          string (optional)   Subject of the message for email message
       # body             string              Body of the message
       # text             string (optional)   Text version of the body for messages with non-text body
@@ -66,6 +69,7 @@ module Frontapp
       # ------------------------------------------------
       def send_reply(conversation_id, params)
         cleaned = params.permit(:author_id,
+                                :sender_name,
                                 :subject,
                                 :body,
                                 :text,
