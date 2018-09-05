@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'frontapp'
 
-RSpec.describe 'Contact' do
+RSpec.describe 'Inboxes' do
 
   let(:headers) {
     {

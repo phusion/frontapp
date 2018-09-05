@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'frontapp'
 
-RSpec.describe 'Teammates' do
+RSpec.describe 'Teams' do
 
   let(:headers) {
     {

@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'frontapp'
-  s.version     = '0.0.2'
-  s.date        = '2017-01-07'
+  s.version     = '0.0.3'
+  s.date        = '2018-09-05'
   s.summary     = "Ruby client for Frontapp API"
   s.description = "Ruby client for Frontapp API"
   s.authors     = ["Niels van der Zanden"]

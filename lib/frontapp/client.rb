@@ -13,6 +13,8 @@ require_relative 'client/rules.rb'
 require_relative 'client/tags.rb'
 require_relative 'client/teammates.rb'
 require_relative 'client/teams.rb'
+require_relative 'client/topics.rb'
+require_relative 'client/exports.rb'
 
 module Frontapp
   class Client
@@ -29,6 +31,8 @@ module Frontapp
     include Frontapp::Client::Tags
     include Frontapp::Client::Teammates
     include Frontapp::Client::Teams
+    include Frontapp::Client::Topics
+    include Frontapp::Client::Exports
 
     def initialize(options={})
       auth_token = options[:auth_token]
