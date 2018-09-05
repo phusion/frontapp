@@ -116,6 +116,9 @@ client.add_contact_handle!("ctc_55c8c149", { handle: "@calculon", source: "twitt
 # Delete a handle from a contact
 client.delete_contact_handle!("ctc_55c8c149", { handle: "@calculon", source: "twitter" })
 
+# Force delete a handle from a contact, required if it is the last handle
+client.delete_contact_handle!("ctc_55c8c149", { handle: "@calculon", source: "twitter", force: true })
+
 # Get all notes for a contact
 notes = client.get_contact_notes("ctc_55c8c149")
 
@@ -139,6 +142,7 @@ converstation = client.get_conversation("cnv_55c8c149")
 client.update_conversation!("cnv_55c8c149", {
   assignee_id: "user@example.com",
   status: "archived",
+  inbox_id: "inb_55c8c149",
   tags: ["time travel"]
 })
 
@@ -286,6 +290,16 @@ tag = client.create_tag!({name: "New tag name"})
 conversations = client.get_tag_conversations("tag_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
 ```
 
+### Teams
+```ruby
+# Get all teams
+teams = client.teams
+
+# Get a specific team
+team = client.get_team("tim_55c8c149")
+
+```
+
 ### Teammates
 ```ruby
 # Get all teammates
@@ -308,5 +322,38 @@ conversations = client.get_teammate_conversations("user@example.com", { q: { sta
 
 # Get all inboxes for a teammate
 inboxes = client.get_teammate_inboxes("user@example.com")
+```
 
+### Topics
+```ruby
+# Get all conversations for a topic
+# Optionally include a filter for conversation statuses
+conversations = client.get_topic_conversations("top_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
+```
+
+### Exports
+```ruby
+# Get all exports
+exports = client.exports
+
+# Get a teammate
+export = client.get_export("exp_55c8c149")
+
+# Create a new export
+contact = client.create_export!({
+  inbox_id: "inb_55c8c149",
+  start: 1428889003,
+  end: 1428889008,
+  timezone: "America/New_York",
+  should_export_events: false
+})
+
+# Create a new export
+contact = client.create_export_for_team!("tim_55c8c149", {
+  inbox_id: "inb_55c8c149",
+  start: 1428889003,
+  end: 1428889008,
+  timezone: "America/New_York",
+  should_export_events: false
+})
 ```

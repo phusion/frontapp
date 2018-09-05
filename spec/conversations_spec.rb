@@ -550,6 +550,7 @@ RSpec.describe 'Conversations' do
   it "can update a conversation" do
     data = {
       assignee_id: "alt:email:fry@planet-express.com",
+      inbox_id: "inb_55c8c149",
       status: "archived",
       tags: [ "time travel" ]
     }

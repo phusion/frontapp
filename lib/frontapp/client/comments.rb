@@ -15,7 +15,7 @@ module Frontapp
       # body       string  Content of the comment
       # ------------------------------
       def create_comment!(conversation_id, params = {})
-        cleaned = params.permit(:author_id,:body)
+        cleaned = params.permit(:author_id, :body)
         create("conversations/#{conversation_id}/comments", cleaned)
       end
 

@@ -112,13 +112,14 @@ module Frontapp
       # -------------------------------
       #
       # Allowed attributes:
-      # Name    Type    Description
-      # ---------------------------
-      # handle  string  Handle used to reach the contact. Can be an email address, a twitter, handle, a phone number, …
-      # source  enum    Can be 'twitter’, 'email’ or 'phone’.
-      # ---------------------------
+      # Name    Type                Description
+      # ---------------------------------------
+      # handle  string              Handle used to reach the contact. Can be an email address, a twitter, handle, a phone number, …
+      # source  enum                Can be 'twitter’, 'email’ or 'phone’.
+      # force   boolean (optional)  Force the deletetion of the contact if the handle is the last one
+      # ---------------------------------------
       def delete_contact_handle!(contact_id, params = {})
-        cleaned = params.permit(:handle, :source)
+        cleaned = params.permit(:handle, :source, :force)
         delete("contacts/#{contact_id}/handles", cleaned)
       end
 
