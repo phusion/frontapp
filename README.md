@@ -81,26 +81,26 @@ contact = client.get_contact("ctc_55c8c149")
 
 # Update a contact
 client.update_contact!("ctc_55c8c149", {
-	name: "Name",
-	description: "Description",
-	avatar_url: "http://example.com/avatar",
-	is_spammer: false,
-	links: ["http://example.com"],
-	group_names: ["Customer"]
+  name: "Name",
+  description: "Description",
+  avatar_url: "http://example.com/avatar",
+  is_spammer: false,
+  links: ["http://example.com"],
+  group_names: ["Customer"]
 })
 
 # Create a new contact
 contact = client.create_contact!({
-	name: "Name",
-	description: "Description",
-	avatar_url: "http://example.com/avatar",
-	is_spammer: false,
-	links: ["http://example.com"],
-	group_names: ["Customer"]
-	handles: [{
-      "handle": "@calculon",
-      "source": "twitter"
-    }]
+  name: "Name",
+  description: "Description",
+  avatar_url: "http://example.com/avatar",
+  is_spammer: false,
+  links: ["http://example.com"],
+  group_names: ["Customer"],
+  handles: [{
+    "handle": "@calculon",
+    "source": "twitter"
+  }]
 })
 
 # Delete a contact
