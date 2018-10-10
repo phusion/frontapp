@@ -100,7 +100,10 @@ contact = client.create_contact!({
   handles: [{
     "handle": "@calculon",
     "source": "twitter"
-  }]
+  }],
+  custom_fields: {
+    job_title: "Engineer"
+  }
 })
 
 # Delete a contact

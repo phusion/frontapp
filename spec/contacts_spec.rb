@@ -132,7 +132,10 @@ RSpec.describe 'Contacts' do
       "id": "grp_55c8c149",
       "name": "Customers"
     }
-  ]
+  ],
+  "custom_fields": {
+    "job title": "engineer"
+  }
 }
     }
   }
@@ -336,7 +339,10 @@ RSpec.describe 'Contacts' do
       links: [
         "http://example.com"
       ],
-      group_names: [ "Customers" ]
+      group_names: [ "Customers" ],
+      custom_fields: {
+        "job title": "engineer"
+      }
     }
     stub_request(:patch, "#{base_url}/contacts/#{contact_id}").
       with( body: data.to_json,
@@ -360,7 +366,10 @@ RSpec.describe 'Contacts' do
           handle: "@calculon",
           source: "twitter"
         }
-      ]
+      ],
+      custom_fields: {
+        "job title": "engineer"
+      }
     }
     stub_request(:post, "#{base_url}/contacts").
       with( body: data.to_json,
