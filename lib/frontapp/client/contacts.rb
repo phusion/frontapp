@@ -24,12 +24,13 @@ module Frontapp
       # Allowed attributes:
       # Name         Type                Description
       # --------------------------------------------
-      # name         string (optional)   Contact name
-      # description  string (optional)   Contact description
-      # avatar_url   string (optional)   URL of the contact’s avatar
-      # is_spammer   boolean (optional)  Whether or not the contact is marked as a spammer
-      # links        array (optional)    List of all the links of the contact
-      # group_names  array (optional)    List of all the group names the contact belongs to. It will automatically create missing groups.
+      # name          string (optional)   Contact name
+      # description   string (optional)   Contact description
+      # avatar_url    string (optional)   URL of the contact’s avatar
+      # is_spammer    boolean (optional)  Whether or not the contact is marked as a spammer
+      # links         array (optional)    List of all the links of the contact
+      # group_names   array (optional)    List of all the group names the contact belongs to. It will automatically create missing groups.
+      # custom_fields object (optional)   Custom field attributes for this contact. Leave empty if you do not wish to update the attributes. Not sending existing attributes will automatically remove them.
       # --------------------------------------------
       def update_contact!(contact_id, params = {})
         cleaned = params.permit(:name,
@@ -37,7 +38,8 @@ module Frontapp
                                 :avatar_url,
                                 :is_spammer,
                                 :links,
-                                :group_names)
+                                :group_names,
+                                :custom_fields)
         update("contacts/#{contact_id}", cleaned)
       end
 
@@ -50,7 +52,8 @@ module Frontapp
       # is_spammer   boolean (optional)  Whether or not the contact is marked as a spammer
       # links        array (optional)    List of all the links of the contact
       # group_names  array (optional)    List of all the group names the contact belongs to. It will automatically create missing groups.
-      # handles      array               List
+      # handles      array               List of the contact handles
+      # custom_fields object (optional)  Custom field attributes for this contact. Leave empty if you do not wish to update the attributes. Not sending existing attributes will automatically remove them.
       # --------------------------------------------
       def create_contact!(params = {})
         cleaned = params.permit(:name,
@@ -59,7 +62,8 @@ module Frontapp
                                 :is_spammer,
                                 :links,
                                 :group_names,
-                                :handles)
+                                :handles,
+                                :custom_fields)
         create("contacts", cleaned)
       end
 
