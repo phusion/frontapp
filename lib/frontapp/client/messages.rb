@@ -25,6 +25,7 @@ module Frontapp
       # subject          string (optional)   Subject of the message for email message
       # body             string              Body of the message
       # text             string (optional)   Text version of the body for messages with non-text body
+      # attachments      array (optional)    Binary data of the attached files. Available only for multipart request.
       # options          object (optional)   Sending options
       # options.tags     array (optional)    List of tag names to add to the conversation (unknown tags will automatically be created)
       # options.archive  boolean (optional)  Archive the conversation right when sending the reply (Default: true)
@@ -38,6 +39,7 @@ module Frontapp
                                 :subject,
                                 :body,
                                 :text,
+                                :attachments,
                                 { options: [:tags, :archive] },
                                 :to,
                                 :cc,
@@ -59,6 +61,7 @@ module Frontapp
       # subject          string (optional)   Subject of the message for email message
       # body             string              Body of the message
       # text             string (optional)   Text version of the body for messages with non-text body
+      # attachments      array (optional)    Binary data of the attached files. Available only for multipart request.
       # options          object (optional)   Sending options
       # options.tags     array (optional)    List of tag names to add to the conversation (unknown tags will automatically be created)
       # options.archive  boolean (optional)  Archive the conversation right when sending the reply (Default: true)
@@ -73,6 +76,7 @@ module Frontapp
                                 :subject,
                                 :body,
                                 :text,
+                                :attachments,
                                 { options: [:tags, :archive] },
                                 :channel_id,
                                 :to,
@@ -97,6 +101,7 @@ module Frontapp
       # subject               string (optional)  Subject of the message
       # body                  string             Body of the message
       # body_format           enum (optional)    Format of the message body. (Default: 'markdown')
+      # attachments           array (optional)   Binary data of the attached files. Available only for multipart request.
       # metadata              object (optional)
       # metadata.thread_ref   string (optional)  Custom reference which will be used to thread messages. If you ommit this field, we’ll thread by sender instead
       # metadata.headers      object (optional)  Custom object where any internal information can be stored
@@ -106,6 +111,7 @@ module Frontapp
                                 :subject,
                                 :body,
                                 :body_format,
+                                :attachments,
                                 { metadata: [:thread_ref, :headers] })
         create("channels/#{channel_id}/incoming_messages", cleaned)
       end
@@ -129,6 +135,7 @@ module Frontapp
       # subject                     string (optional)   Subject of the message.
       # body                        string              Body of the message.
       # body_format                 enum (optional)     Format of the message body. Ignored if the message type is not email. (Default: 'markdown')
+      # attachments                 array (optional)    Binary data of the attached files. Available only for multipart request.
       # external_id                 string              External identifier of the message. Front won’t import two messages with the same external ID.
       # created_at                  number              Date at which the message as been sent or received.
       # type                        enum (optional)     Type of the message to import. (Default: 'email')
@@ -148,6 +155,7 @@ module Frontapp
                                 :subject,
                                 :body,
                                 :body_format,
+                                :attachments,
                                 :external_id,
                                 :created_at,
                                 :type,

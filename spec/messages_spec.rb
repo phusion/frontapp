@@ -107,6 +107,7 @@ RSpec.describe 'Messages' do
     data = {
       author_id: "alt:email:leela@planet-exress.com",
       subject: "Good news everyone!",
+      sender_name: 'Leela',
       body: "Why is Zoidberg the only one still alone?",
       text: "Why is Zoidberg the only one still alone?",
       options: {
@@ -128,6 +129,7 @@ RSpec.describe 'Messages' do
     data = {
       author_id: "alt:email:leela@planet-exress.com",
       subject: "Good news everyone!",
+      sender_name: 'Leela',
       body: "Why is Zoidberg the only one still alone?",
       text: "Why is Zoidberg the only one still alone?",
       options: {
