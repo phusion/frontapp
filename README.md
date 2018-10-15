@@ -360,3 +360,10 @@ contact = client.create_export_for_team!("tim_55c8c149", {
   should_export_events: false
 })
 ```
+
+# Contributors
+
+Special thanks to:
+
+- [tatey](https://github.com/tatey)
+- [techpeace](https://github.com/techpeace)
