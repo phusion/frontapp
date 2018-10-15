@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Ruby client for Frontapp API"
   s.authors     = ["Niels van der Zanden"]
   s.email       = 'niels@phusion.nl'
-  s.files       = ["lib/frontapp.rb", "lib/frontapp/client.rb"]
+  s.files       = ["lib/frontapp.rb", "lib/frontapp/client.rb", "lib/frontapp/error.rb"]
   s.files       += Dir.glob("lib/frontapp/client/*.rb")
   s.files       += Dir.glob("lib/frontapp/utils/*.rb")
   s.homepage    = 'https://github.com/phusion/frontapp'

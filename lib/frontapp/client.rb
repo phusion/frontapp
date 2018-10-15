@@ -15,6 +15,7 @@ require_relative 'client/teammates.rb'
 require_relative 'client/teams.rb'
 require_relative 'client/topics.rb'
 require_relative 'client/exports.rb'
+require_relative 'error'
 
 module Frontapp
   class Client
@@ -63,6 +64,9 @@ module Frontapp
 
     def get(path)
       res = @headers.get("#{base_url}#{path}")
+      if !res.status.success?
+        raise Error.from_response(res)
+      end
       JSON.parse(res.to_s)
     end
 
@@ -70,7 +74,7 @@ module Frontapp
       res = @headers.post("#{base_url}#{path}", json: body)
       response = JSON.parse(res.to_s)
       if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
+        raise Error.from_response(res)
       end
       response
     end
@@ -78,21 +82,21 @@ module Frontapp
     def create_without_response(path, body)
       res = @headers.post("#{base_url}#{path}", json: body)
       if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
+        raise Error.from_response(res)
       end
     end
 
     def update(path, body)
       res = @headers.patch("#{base_url}#{path}", json: body)
       if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
+        raise Error.from_response(res)
       end
     end
 
     def delete(path, body = {})
       res = @headers.delete("#{base_url}#{path}", json: body)
       if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
+        raise Error.from_response(res)
       end
     end
 
