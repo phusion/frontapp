@@ -16,6 +16,7 @@ require_relative 'client/teams.rb'
 require_relative 'client/topics.rb'
 require_relative 'client/exports.rb'
 require_relative 'error'
+require_relative 'version'
 
 module Frontapp
   class Client
@@ -37,9 +38,11 @@ module Frontapp
 
     def initialize(options={})
       auth_token = options[:auth_token]
+      user_agent = options[:user_agent] || "Frontapp Ruby Gem #{VERSION}"
       @headers = HTTP.headers({
         Accept: "application/json",
-        Authorization: "Bearer #{auth_token}"
+        Authorization: "Bearer #{auth_token}",
+        "User-Agent": user_agent
       })
     end
 

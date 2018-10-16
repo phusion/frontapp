@@ -18,6 +18,11 @@ require 'frontapp'
 client = Frontapp::Client.new(auth_token: 'token') 
 ```
 
+Optionally, set a custom user agent to identify your integration
+```ruby
+client = Frontapp::Client.new(auth_token: 'token', user_agent: 'Eye-Phone Integration (engineering@planet-express.com')
+```
+
 ### Channels
 ```ruby
 # Get all channels
