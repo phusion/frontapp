@@ -53,6 +53,9 @@ module Frontapp
       url = "#{base_url}#{path}?#{query}"
       until last_page
         res = @headers.get(url)
+        if !res.status.success?
+          raise Error.from_response(res)
+        end
         response = JSON.parse(res.to_s)
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]

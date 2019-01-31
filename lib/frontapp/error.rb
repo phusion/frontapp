@@ -3,9 +3,10 @@ module Frontapp
     def self.from_response(response)
       error_class = case response.status
         when 400 then BadRequestError
+        when 401 then UnauthorizedError
         when 404 then NotFoundError
         when 409 then ConflictError
-        else self.class
+        else self
         end
       error_class.new(response)
     end
@@ -19,4 +20,5 @@ module Frontapp
   class BadRequestError < Error; end
   class NotFoundError < Error; end
   class ConflictError < Error; end
+  class UnauthorizedError < Error; end
 end
