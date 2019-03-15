@@ -204,6 +204,14 @@ RSpec.describe 'Tags' do
       to_return(status: 201, body: create_tag_response)
     frontapp.create_tag!(data)
   end
+  
+  it "can delete a tag" do
+    stub_request(:delete, "#{base_url}/tags/#{tag_id}").
+      with( headers: headers).
+      to_return(status: 204, body: nil)
+    frontapp.delete_tag(tag_id)
+  end
+  
 
   it "can get all tag conversations" do
     stub_request(:get, "#{base_url}/tags/#{tag_id}/conversations").
