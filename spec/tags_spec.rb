@@ -209,7 +209,7 @@ RSpec.describe 'Tags' do
     stub_request(:delete, "#{base_url}/tags/#{tag_id}").
       with( headers: headers).
       to_return(status: 204, body: nil)
-    frontapp.delete_tag(tag_id)
+    frontapp.delete_tag!(tag_id)
   end
   
 

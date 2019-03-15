@@ -47,7 +47,7 @@ module Frontapp
       # ---------------------------
       # tag_id  string  Id of the requested tag
       # ---------------------------
-      def delete_tag(tag_id)
+      def delete_tag!(tag_id)
         delete("tags/#{tag_id}")
       end
       
