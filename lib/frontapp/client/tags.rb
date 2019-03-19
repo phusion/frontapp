@@ -41,6 +41,16 @@ module Frontapp
         cleaned = params.permit({ q: [:statuses] })
         list("tags/#{tag_id}/conversations", cleaned)
       end
+      
+      # Parameters
+      # Name    Type    Description
+      # ---------------------------
+      # tag_id  string  Id of the requested tag
+      # ---------------------------
+      def delete_tag!(tag_id)
+        delete("tags/#{tag_id}")
+      end
+      
     end
   end
 end
