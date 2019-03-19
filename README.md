@@ -293,6 +293,9 @@ tag = client.get_tag("tag_55c8c149")
 # Create tag
 tag = client.create_tag!({name: "New tag name"})
 
+# Delete tag
+tag = client.delete_tag!("tag_55c8c149")
+
 # Get all conversation for a tag
 # Optionally include a filter for conversation statuses
 conversations = client.get_tag_conversations("tag_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
@@ -372,3 +375,4 @@ Special thanks to:
 
 - [tatey](https://github.com/tatey)
 - [techpeace](https://github.com/techpeace)
+- [jcrate](https://github.com/jcrate)
