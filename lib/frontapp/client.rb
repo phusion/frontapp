@@ -75,6 +75,15 @@ module Frontapp
       end
       JSON.parse(res.to_s)
     end
+    
+    def get_plain(path)
+      headers_copy = @headers.dup
+      res = @headers.accept("text/plain").get("#{base_url}#{path}")
+      if !res.status.success?
+        raise Error.from_response(res)
+      end
+      res.to_s
+    end
 
     def create(path, body)
       res = @headers.post("#{base_url}#{path}", json: body)
@@ -114,13 +123,15 @@ module Frontapp
         res << q.map do |k, v|
           case v
           when Symbol, String
-            "q[#{k}][]=#{URI.encode(v)}"
+            "q[#{k}]=#{URI.encode(v)}"
           when Array then
-            v.map { |c| "q[#{k}][]=#{URI.encode(c)}" }.join("&")
+            v.map { |c| "q[#{k}][]=#{URI.encode(c.to_s)}" }.join("&")
+          else
+            "q[#{k}]=#{URI.encode(v.to_s)}"
           end
         end
       end
-      res << params.map {|k,v| "#{k}=#{URI.encode(v)}"}
+      res << params.map {|k,v| "#{k}=#{URI.encode(v.to_s)}"}
       res.join("&")
     end
 

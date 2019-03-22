@@ -74,6 +74,7 @@ RSpec.describe 'Messages' do
 }
     }
   }
+  let(:message_source) { "Who wants to live forever?" }
   let(:send_message_from_channel_response) {
     %Q{
 {
@@ -102,7 +103,15 @@ RSpec.describe 'Messages' do
       to_return(status: 200, body: get_message_response)
     frontapp.get_message(message_id)
   end
-
+  
+  it "can get a specific message source" do
+    headers['Accept'] = 'text/plain'
+    stub_request(:get, "#{base_url}/messages/#{message_id}").
+      with( headers: headers).
+      to_return(status: 200, body: message_source)
+    frontapp.get_message_source(message_id)
+  end
+  
   it "can send a message from a channel" do
     data = {
       author_id: "alt:email:leela@planet-exress.com",
