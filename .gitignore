@@ -3,3 +3,7 @@
 .rspec
 Gemfile.lock
 vendor
+
+# ignore RVM config
+.versions.conf
+

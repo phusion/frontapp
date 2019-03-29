@@ -206,6 +206,9 @@ teammates = client.get_inbox_teammates("inb_55c8c149")
 # Get a specific message
 message = client.get_message("msg_55c8c149")
 
+# Get raw email source for a specific message
+message_source = client.get_message_source("msg_55c8c149")
+
 # Send a new message to a channel
 conversation_reference = client.send_message("cha_55c8c149", {
   author_id: "user@example.com",
