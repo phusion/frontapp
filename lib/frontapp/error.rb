@@ -6,6 +6,7 @@ module Frontapp
         when 401 then UnauthorizedError
         when 404 then NotFoundError
         when 409 then ConflictError
+        when 429 then TooManyRequestsError
         else self
         end
       error_class.new(response)
@@ -21,4 +22,5 @@ module Frontapp
   class NotFoundError < Error; end
   class ConflictError < Error; end
   class UnauthorizedError < Error; end
+  class TooManyRequestsError < Error; end
 end
