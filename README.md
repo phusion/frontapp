@@ -379,3 +379,4 @@ Special thanks to:
 - [tatey](https://github.com/tatey)
 - [techpeace](https://github.com/techpeace)
 - [jcrate](https://github.com/jcrate)
+- [langsharpe](https://github.com/langsharpe)
