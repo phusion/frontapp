@@ -39,4 +39,14 @@ RSpec.describe "Errors" do
       frontapp.get_contact(1)
     end.to raise_error(Frontapp::ConflictError)
   end
+
+  it "can raise a too many requests error" do
+    stub_request(:get, "#{base_url}/contacts/1").
+      with(headers: headers).
+      to_return(status: 429, body: "{}")
+
+    expect do
+      frontapp.get_contact(1)
+    end.to raise_error(Frontapp::TooManyRequestsError)
+  end
 end
