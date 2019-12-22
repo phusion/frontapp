@@ -37,7 +37,8 @@ module Frontapp
                                 :avatar_url,
                                 :is_spammer,
                                 :links,
-                                :group_names)
+                                :group_names,
+                                :custom_fields)
         update("/contacts/#{contact_id}", cleaned)
       end
 
