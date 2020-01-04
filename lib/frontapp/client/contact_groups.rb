@@ -3,7 +3,7 @@ module Frontapp
     module ContactGroups
 
       def contact_groups(params = {})
-        list("contact_groups", params)
+        list("/contact_groups", params)
       end
 
       # Allowed attributes:
@@ -13,7 +13,7 @@ module Frontapp
       # -------------------------------------------
       def create_contact_group!(params = {})
         cleaned = params.permit(:name)
-        create("contact_groups", cleaned)
+        create("/contact_groups", cleaned)
       end
 
       # Parameters
@@ -22,7 +22,7 @@ module Frontapp
       # group_id  string  Id of the requested group
       # -------------------------------
       def delete_contact_group!(group_id)
-        delete("contact_groups/#{group_id}")
+        delete("/contact_groups/#{group_id}")
       end
 
 
@@ -32,7 +32,7 @@ module Frontapp
       # group_id  string  Id of the requested group
       # -------------------------------
       def get_contact_group_contacts(group_id)
-        get("contact_groups/#{group_id}/contacts")
+        get("/contact_groups/#{group_id}/contacts")
       end
 
       # Parameters
@@ -48,7 +48,7 @@ module Frontapp
       # --------------------------------------------
       def add_contacts_to_contact_group!(group_id, params = {})
         cleaned = params.permit(:contact_ids)
-        create_without_response("contact_groups/#{group_id}/contacts", cleaned)
+        create_without_response("/contact_groups/#{group_id}/contacts", cleaned)
       end
     end
   end

@@ -3,7 +3,7 @@ module Frontapp
     module Events
 
       def events(params = {})
-        list("events", params)
+        list("/events", params)
       end
 
       # Parameters
@@ -12,7 +12,7 @@ module Frontapp
       # event_id  string  Id of the requested event
       # -----------------------------
       def get_event(event_id)
-        get("events/#{event_id}")
+        get("/events/#{event_id}")
       end
 
     end

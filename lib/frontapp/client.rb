@@ -1,5 +1,5 @@
 require 'uri'
-require 'http'
+require 'httparty'
 require 'json'
 require_relative 'client/channels.rb'
 require_relative 'client/comments.rb'
@@ -16,6 +16,7 @@ require_relative 'error.rb'
 
 module Frontapp
   class Client
+    include HTTParty
 
     include Frontapp::Client::Channels
     include Frontapp::Client::Comments
@@ -29,23 +30,32 @@ module Frontapp
     include Frontapp::Client::Tags
     include Frontapp::Client::Teammates
 
+    base_uri('https://api2.frontapp.com')
+
     def initialize(options={})
       auth_token = options[:auth_token]
-      @headers = HTTP.timeout(:per_operation, write: 2, connect: 5, read: 10).headers({
-        Accept: "application/json",
-        Authorization: "Bearer #{auth_token}"
-      })
+      self.class.debug_output($stdout) if options[:debug]
+
+      self.class.headers(
+        'Accept' => "application/json",
+        'Content-Type' => 'application/json',
+        'Authorization' => "Bearer #{auth_token}"
+      )
     end
 
     def list(path, params = {})
       items = []
       last_page = false
       query = format_query(params)
-      url = "#{base_url}#{path}?#{query}"
+      url = "#{path}?#{query}"
       until last_page
-        res = @headers.get(url)
+        res = self.class.get(url)
         decode_status(res)
-        response = JSON.parse(res.to_s)
+        response = res.parsed_response
+
+        ## ugly
+        response = JSON.parse(response) if response.is_a? String
+
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]
         if pagination.nil? || pagination["next"].nil?
@@ -58,43 +68,31 @@ module Frontapp
     end
 
     def get(path)
-      res = @headers.get("#{base_url}#{path}")
+      res = self.class.get(path)
       decode_status(res)
-      JSON.parse(res.to_s)
+      res.parsed_response
     end
 
     def create(path, body)
-      res = @headers.post("#{base_url}#{path}", json: body)
+      res = self.class.post(path, body: body.to_json)
       decode_status(res)
-      response = JSON.parse(res.to_s)
-      if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
-      end
+      response = res.parsed_response
       response
     end
 
     def create_without_response(path, body)
-      res = @headers.post("#{base_url}#{path}", json: body)
+      res = self.class.post(path, body: body.to_json)
       decode_status(res)
-      if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
-      end
     end
 
     def update(path, body)
-      res = @headers.patch("#{base_url}#{path}", json: body)
+      res = self.class.patch(path, body: body.to_json)
       decode_status(res)
-      if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
-      end
     end
 
     def delete(path, body = {})
-      res = @headers.delete("#{base_url}#{path}", json: body)
+      res = self.class.delete(path, body: body.to_json)
       decode_status(res)
-      if !res.status.success?
-        raise "Response: #{res.inspect}\n Body: #{res.body}\nRequest: #{body.to_json.inspect}"
-      end
     end
 
   private
@@ -115,18 +113,16 @@ module Frontapp
       res.join("&")
     end
 
-    def base_url
-      "https://api2.frontapp.com/"
-    end
-
     def decode_status(response)
-      if response.status.to_i == 429
+      if response.code == 429
         context = {}
         %w[Retry-After X-RateLimit-Limit X-RateLimit-Remaining X-RateLimit-Reset].each do |header|
           context[header] = response.headers[header]
         end
 
         raise RateLimitError.new(429, context)
+      elsif !response.success?
+        raise Error.new(response.code, response.parsed_response)
       end
     end
   end

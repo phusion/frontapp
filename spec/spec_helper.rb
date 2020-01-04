@@ -109,5 +109,5 @@ def base_url
 end
 
 def auth_token
-  ""
+  "test"
 end

@@ -16,7 +16,7 @@ module Frontapp
       # ------------------------------
       def create_comment!(conversation_id, params = {})
         cleaned = params.permit(:author_id,:body)
-        create("conversations/#{conversation_id}/comments", cleaned)
+        create("/conversations/#{conversation_id}/comments", cleaned)
       end
 
       # Parameters
@@ -25,7 +25,7 @@ module Frontapp
       # conversation_id  string  Id of the requested conversation
       # ------------------------------------
       def get_conversation_comments(conversation_id)
-        list("conversations/#{conversation_id}/comments")
+        list("/conversations/#{conversation_id}/comments")
       end
 
       # Parameters
@@ -34,7 +34,7 @@ module Frontapp
       # comment_id  string  Id of the requested comment
       # -------------------------------
       def get_comment(comment_id)
-        get("comments/#{comment_id}")
+        get("/comments/#{comment_id}")
       end
 
       # Parameters
@@ -43,7 +43,7 @@ module Frontapp
       # comment_id  string  Id of the requested comment
       # -------------------------------
       def get_comment_mentions(comment_id)
-        get("comments/#{comment_id}/mentions")
+        get("/comments/#{comment_id}/mentions")
       end
 
     end
