@@ -15,12 +15,18 @@ The auth_token can be obtained from Frontapp, in Settings -> API & Integrations 
 Create a Frontapp client
 ```ruby
 require 'frontapp'
-client = Frontapp::Client.new(auth_token: 'token') 
+client = Frontapp::Client.new(auth_token: 'token')
 ```
 
 Optionally, set a custom user agent to identify your integration
 ```ruby
 client = Frontapp::Client.new(auth_token: 'token', user_agent: 'Eye-Phone Integration (engineering@planet-express.com')
+```
+
+### Attachments
+```ruby
+# Download a file attachment
+attachment_file = client.download_attachment("fil_55c8c149")
 ```
 
 ### Channels

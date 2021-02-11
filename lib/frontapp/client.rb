@@ -1,6 +1,7 @@
 require 'uri'
 require 'http'
 require 'json'
+require_relative 'client/attachments.rb'
 require_relative 'client/channels.rb'
 require_relative 'client/comments.rb'
 require_relative 'client/contact_groups.rb'
@@ -21,6 +22,7 @@ require_relative 'version'
 module Frontapp
   class Client
 
+    include Frontapp::Client::Attachments
     include Frontapp::Client::Channels
     include Frontapp::Client::Comments
     include Frontapp::Client::ContactGroups
@@ -75,7 +77,7 @@ module Frontapp
       end
       JSON.parse(res.to_s)
     end
-    
+
     def get_plain(path)
       headers_copy = @headers.dup
       res = @headers.accept("text/plain").get("#{base_url}#{path}")
@@ -83,6 +85,15 @@ module Frontapp
         raise Error.from_response(res)
       end
       res.to_s
+    end
+
+    def get_raw(path)
+      headers_copy = @headers.dup
+      res = @headers.get("#{base_url}#{path}")
+      if !res.status.success?
+        raise Error.from_response(res)
+      end
+      res
     end
 
     def create(path, body)
