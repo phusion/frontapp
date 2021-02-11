@@ -386,3 +386,4 @@ Special thanks to:
 - [techpeace](https://github.com/techpeace)
 - [jcrate](https://github.com/jcrate)
 - [langsharpe](https://github.com/langsharpe)
+- [thechrisoshow](https://github.com/thechrisoshow)
