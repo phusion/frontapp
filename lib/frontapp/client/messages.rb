@@ -102,6 +102,7 @@ module Frontapp
                                 :subject,
                                 :body,
                                 :body_format,
+                                :attachments,
                                 { metadata: [:thread_ref, :headers] })
         create("/channels/#{channel_id}/incoming_messages", cleaned)
       end
