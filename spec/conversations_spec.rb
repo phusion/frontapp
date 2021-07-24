@@ -589,4 +589,34 @@ RSpec.describe 'Conversations' do
     frontapp.get_conversation_messages(conversation_id)
   end
 
+  it "can add conversation topics by id" do
+    data = {
+      topic_ids: ["top_55c8c149"]
+    }
+    stub_request(:post, "#{base_url}/conversations/#{conversation_id}/topics").
+      with( headers: headers).
+      to_return(status: 202)
+    frontapp.add_conversation_topics!(conversation_id, data)
+  end
+
+  it "can add conversation topics by link" do
+    data = {
+      topic_links: ["example.com/my-link"]
+    }
+    stub_request(:post, "#{base_url}/conversations/#{conversation_id}/topics").
+      with( headers: headers).
+      to_return(status: 202)
+    frontapp.add_conversation_topics!(conversation_id, data)
+  end
+
+  it "can remove conversation topics by id" do
+    data = {
+      topic_ids: ["top_55c8c149"]
+    }
+    stub_request(:delete, "#{base_url}/conversations/#{conversation_id}/topics").
+      with( headers: headers).
+      to_return(status: 204, body: nil)
+    frontapp.delete_tag!(conversation_id, data)
+  end
+
 end

@@ -136,11 +136,99 @@ RSpec.describe 'Topics' do
 }
     }
   }
+  let(:topics_response) do
+    %Q{
+{
+  "_pagination": {
+    "next": null
+  },
+  "_links": {
+    "self": "https://api2.frontapp.com/topics?"
+  },
+  "_results": [
+    {
+      "id": "top_55c8c149",
+      "name": "123456",
+      "type": "web",
+      "link": "https://example.com/something/123456"
+    },
+    {
+      "id": "top_55ih5t",
+      "name": "www.google.com",
+      "type": "web",
+      "link": "www.google.com"
+    },
+    {
+      "id": "top_55i8f5",
+      "name": "something.io",
+      "type": "web",
+      "link": "http://something.io"
+    }
+  ]
+}
+    }
+  end
+  let(:get_topic_response) do
+    %Q{
+{
+  "id": "top_55c8c149",
+  "name": "123456",
+  "type": "web",
+  "link": "https://example.com/something/123456"
+}
+    }
+  end
+  let(:create_topic_response) {
+    %Q{
+{
+  "id": "top_3ij8h",
+  "name": "Bla",
+  "type": "web",
+  "link": "bla.io"
+}
+    }
+  end
 
   it "can get all topic conversations" do
     stub_request(:get, "#{base_url}/topics/#{topic_id}/conversations").
       with( headers: headers).
       to_return(status: 200, body: topic_conversations_response)
     frontapp.get_topic_conversations(topic_id)
+  end
+
+  it "can list topics" do
+    stub_request(:get, "#{base_url}/topics").
+      with( headers: headers).
+      to_return(status: 200, body: topics_response)
+    frontapp.topics
+  end
+
+  it "can get a topic" do
+    stub_request(:get, "#{base_url}/topics/#{topic_id}").
+      with( headers: headers).
+      to_return(status: 200, body: get_topic_response)
+    frontapp.get_topic(topic_id)
+  end
+
+  it "can create a topic" do
+    data = {
+      name: "New topic",
+      link: "my.link"
+    }
+    stub_request(:post, "#{base_url}/topics").
+      with( body: data.to_json,
+            headers: headers).
+      to_return(status: 200, body: )
+  end
+
+  it "can update a topic" do
+    data = {
+      name: "new name"
+    }
+    stub_request(:patch, "#{base_url}/topics/#{topic_id}").
+      with( body: data.to_json,
+            headers: headers).
+      to_return(status: 204)
+    frontapp.update_topic!(topic_id, data)
   end
 end

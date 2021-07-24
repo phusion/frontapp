@@ -172,6 +172,20 @@ events = client.get_conversation_events("cnv_55c8c149")
 # Get all messages for a conversation
 messages = client.get_conversation_messages("cnv_55c8c149")
 
+# Add conversation topics (by topic_id)
+client.add_conversation_topics!("cnv_55c8c149", {
+  topic_ids: ["top_3ii5d", "top_3ih5t"]
+})
+
+# Add conversation topics (by link) (it creates the topic if doesn't exist)
+client.add_conversation_topics!("cnv_55c8c149", {
+  topic_links: ["https://example.com"]
+})
+
+# Remove conversation topics
+client.remove_conversation_topics!("cnv_55c8c149", {
+  topic_ids: ["top_3ii5d", "top_3ih5t"]
+})
 ```
 
 ### Events
@@ -346,6 +360,21 @@ inboxes = client.get_teammate_inboxes("user@example.com")
 
 ### Topics
 ```ruby
+# Get all topics
+topics = client.topics
+
+# Get a topic
+topic = client.get_topic("top_55c8c149")
+
+# Create a new topic
+topic = client.create_topic!({
+  name: "Nice topic",
+  link: "https://www.example.com/nice_topic"
+})
+
+# Update a topic
+client.update_topic!("top_55c8c149", { name: "Something new" })
+
 # Get all conversations for a topic
 # Optionally include a filter for conversation statuses
 conversations = client.get_topic_conversations("top_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
