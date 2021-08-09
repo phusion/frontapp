@@ -15,8 +15,9 @@ module Frontapp
       # q.statuses  array (optional)   List of the statuses of the conversations you want to list
       # ------------------------------------------
       def get_topic_conversations(topic_id, params = {})
-        cleaned = params.permit({ q: [:statuses] })
-        list("topics/#{topic_id}/conversations", cleaned)
+        warn "[DEPRECATION] `Topics` is deprecated.  Please use `Links` instead."
+
+        get_link_conversations(topic_id, params)
       end
     end
   end

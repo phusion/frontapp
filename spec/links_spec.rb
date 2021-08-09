@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'frontapp'
 
-RSpec.describe 'Topics' do
+RSpec.describe 'Links' do
 
   let(:headers) {
     {
@@ -10,13 +10,13 @@ RSpec.describe 'Topics' do
     }
   }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
-  let(:topic_id) { "top_55c8c149" }
-  let(:topic_conversations_response) {
+  let(:link_id) { "top_55c8c149" }
+  let(:link_conversations_response) {
     %Q{
 {
   "_pagination": {},
   "_links": {
-    "self": "https://api2.frontapp.com/topics/top_55c8c149/conversations"
+    "self": "https://api2.frontapp.com/links/top_55c8c149/conversations"
   },
   "_results": [
     {
@@ -136,11 +136,106 @@ RSpec.describe 'Topics' do
 }
     }
   }
+  let(:links_response) do
+    %Q{
+{
+  "_pagination": {
+    "next": null
+  },
+  "_links": {
+    "self": "https://api2.frontapp.com/links?"
+  },
+  "_results": [
+    {
+      "id": "top_55c8c149",
+      "name": "123456",
+      "type": "web",
+      "external_url": "https://example.com/something/123456",
+      "link": "https://example.com/something/123456"
+    },
+    {
+      "id": "top_55ih5t",
+      "name": "www.google.com",
+      "type": "web",
+      "external_url": "www.google.com",
+      "link": "www.google.com"
+    },
+    {
+      "id": "top_55i8f5",
+      "name": "something.io",
+      "type": "web",
+      "external_url": "http://something.io",
+      "link": "http://something.io"
+    }
+  ]
+}
+    }
+  end
+  let(:get_link_response) do
+    %Q{
+{
+  "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_55c8c149"},
+  "id": "top_55c8c149",
+  "name": "123456",
+  "type": "web",
+  "external_url": "https://example.com/something/123456",
+  "link": "https://example.com/something/123456"
+}
+    }
+  end
+  let(:create_link_response) {
+    %Q{
+{
+  "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_3ij8h"},
+  "id": "top_3ij8h",
+  "name": "Bla",
+  "type": "web",
+  "external_url": "bla.io",
+  "link": "bla.io"
+}
+    }
+  end
 
-  it "can get all topic conversations" do
-    stub_request(:get, "#{base_url}/topics/#{topic_id}/conversations").
+  it "can get all link conversations" do
+    stub_request(:get, "#{base_url}/links/#{link_id}/conversations").
       with( headers: headers).
-      to_return(status: 200, body: topic_conversations_response)
-    frontapp.get_topic_conversations(topic_id)
+      to_return(status: 200, body: link_conversations_response)
+    frontapp.get_link_conversations(link_id)
+  end
+
+  it "can list links" do
+    stub_request(:get, "#{base_url}/links").
+      with( headers: headers).
+      to_return(status: 200, body: links_response)
+    frontapp.links
+  end
+
+  it "can get a link" do
+    stub_request(:get, "#{base_url}/links/#{link_id}").
+      with( headers: headers).
+      to_return(status: 200, body: get_link_response)
+    frontapp.get_link(link_id)
+  end
+
+  it "can create a link" do
+    data = {
+      name: "New link",
+      external_url: "my.link"
+    }
+    stub_request(:post, "#{base_url}/links").
+      with( body: data.to_json,
+            headers: headers).
+      to_return(status: 200, body: )
+  end
+
+  it "can update a link name" do
+    data = {
+      name: "new name"
+    }
+    stub_request(:patch, "#{base_url}/links/#{link_id}").
+      with( body: data.to_json,
+            headers: headers).
+      to_return(status: 204)
+    frontapp.update_link!(link_id, data)
   end
 end

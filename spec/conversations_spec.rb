@@ -589,4 +589,34 @@ RSpec.describe 'Conversations' do
     frontapp.get_conversation_messages(conversation_id)
   end
 
+  it "can add conversation links by id" do
+    data = {
+      link_ids: ["top_55c8c149"]
+    }
+    stub_request(:post, "#{base_url}/conversations/#{conversation_id}/links").
+      with( headers: headers).
+      to_return(status: 202)
+    frontapp.add_conversation_links!(conversation_id, data)
+  end
+
+  it "can add conversation links by link external url" do
+    data = {
+      link_external_urls: ["example.com/my-link"]
+    }
+    stub_request(:post, "#{base_url}/conversations/#{conversation_id}/links").
+      with( headers: headers).
+      to_return(status: 202)
+    frontapp.add_conversation_links!(conversation_id, data)
+  end
+
+  it "can remove conversation links by id" do
+    data = {
+      link_ids: ["top_55c8c149"]
+    }
+    stub_request(:delete, "#{base_url}/conversations/#{conversation_id}/links").
+      with( headers: headers).
+      to_return(status: 204, body: nil)
+    frontapp.delete_tag!(conversation_id, data)
+  end
+
 end
