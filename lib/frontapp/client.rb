@@ -15,6 +15,7 @@ require_relative 'client/tags.rb'
 require_relative 'client/teammates.rb'
 require_relative 'client/teams.rb'
 require_relative 'client/topics.rb'
+require_relative 'client/links.rb'
 require_relative 'client/exports.rb'
 require_relative 'error'
 require_relative 'version'
@@ -36,6 +37,7 @@ module Frontapp
     include Frontapp::Client::Teammates
     include Frontapp::Client::Teams
     include Frontapp::Client::Topics
+    include Frontapp::Client::Links
     include Frontapp::Client::Exports
 
     def initialize(options={})

@@ -172,6 +172,20 @@ events = client.get_conversation_events("cnv_55c8c149")
 # Get all messages for a conversation
 messages = client.get_conversation_messages("cnv_55c8c149")
 
+# Add conversation links (by link_id)
+client.add_conversation_links!("cnv_55c8c149", {
+  link_ids: ["top_3ii5d", "top_3ih5t"]
+})
+
+# Add conversation links (by link) (it creates the link if doesn't exist)
+client.add_conversation_links!("cnv_55c8c149", {
+  link_links: ["https://example.com"]
+})
+
+# Remove conversation links
+client.remove_conversation_links!("cnv_55c8c149", {
+  link_ids: ["top_3ii5d", "top_3ih5t"]
+})
 ```
 
 ### Events
@@ -345,11 +359,33 @@ inboxes = client.get_teammate_inboxes("user@example.com")
 ```
 
 ### Topics
+Topics is deprecated, please use Links instead!
 ```ruby
 # Get all conversations for a topic
 # Optionally include a filter for conversation statuses
 conversations = client.get_topic_conversations("top_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
 ```
+
+### Links
+```ruby
+# Get all links
+links = client.links
+
+# Get a link
+link = client.get_link("top_55c8c149")
+
+# Create a new link
+link = client.create_link!({
+  name: "Nice link",
+  external_url: "https://www.example.com/nice_link"
+})
+
+# Update a link
+client.update_link!("top_55c8c149", { name: "Something new" })
+
+# Get all conversations for a link
+# Optionally include a filter for conversation statuses
+conversations = client.get_link_conversations("top_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
 
 ### Exports
 ```ruby
