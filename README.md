@@ -423,3 +423,4 @@ Special thanks to:
 - [jcrate](https://github.com/jcrate)
 - [langsharpe](https://github.com/langsharpe)
 - [thechrisoshow](https://github.com/thechrisoshow)
+- [feolea](https://github.com/feolea)
