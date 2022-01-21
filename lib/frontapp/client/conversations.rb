@@ -93,6 +93,17 @@ module Frontapp
         cleaned = params.permit(:link_ids)
         delete("conversations/#{conversation_id}/links", cleaned)
       end
+
+      # Parameters
+      # Name             Type              Description
+      # ----------------------------------------------
+      # conversation_id  string            The conversation Id
+      # teammate_ids     array of strings  follower IDs to remove
+      # ----------------------------------------------
+      def remove_conversation_followers!(conversation_id, params = {})
+        cleaned = params.permit(:teammate_ids)
+        delete("conversations/#{conversation_id}/followers", cleaned)
+      end
     end
   end
 end

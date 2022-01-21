@@ -619,4 +619,13 @@ RSpec.describe 'Conversations' do
     frontapp.delete_tag!(conversation_id, data)
   end
 
+  it "can remove conversation followers by id" do
+    data = {
+      teammate_ids: ["tea_64ue9"]
+    }
+    stub_request(:delete, "#{base_url}/conversations/#{conversation_id}/followers").
+      with( headers: headers).
+      to_return(status: 204, body: nil)
+    frontapp.remove_conversation_followers!(conversation_id, data)
+  end
 end
