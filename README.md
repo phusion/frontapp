@@ -187,6 +187,11 @@ client.remove_conversation_links!("cnv_55c8c149", {
   link_ids: ["top_3ii5d", "top_3ih5t"]
 })
 
+# Add conversation followers
+client.add_conversation_followers!("cnv_55c8c149", {
+  teammate_ids: ["tea_64ue9", "tea_638yp"]
+})
+
 # Remove conversation followers
 client.remove_conversation_followers!("cnv_55c8c149", {
   teammate_ids: ["tea_64ue9", "tea_638yp"]
