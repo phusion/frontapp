@@ -434,3 +434,4 @@ Special thanks to:
 - [langsharpe](https://github.com/langsharpe)
 - [thechrisoshow](https://github.com/thechrisoshow)
 - [feolea](https://github.com/feolea)
+- [jefferal1995](https://github.com/jefferal1995)
