@@ -225,7 +225,8 @@ RSpec.describe 'Links' do
     stub_request(:post, "#{base_url}/links").
       with( body: data.to_json,
             headers: headers).
-      to_return(status: 200, body: )
+      to_return(status: 200, body: '{}')
+    frontapp.create_link!(data)
   end
 
   it "can update a link name" do
