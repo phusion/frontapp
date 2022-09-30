@@ -183,7 +183,7 @@ RSpec.describe 'Links' do
 }
     }
   end
-  let(:create_link_response) {
+  let(:create_link_response) do
     %Q{
 {
   "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_3ij8h"},
@@ -213,7 +213,7 @@ RSpec.describe 'Links' do
   it "can get a link" do
     stub_request(:get, "#{base_url}/links/#{link_id}").
       with( headers: headers).
-      to_return(status: 200, body: get_link_response)
+      to_return(status: 200, body: get_link_response.to_json)
     frontapp.get_link(link_id)
   end
 
@@ -225,7 +225,8 @@ RSpec.describe 'Links' do
     stub_request(:post, "#{base_url}/links").
       with( body: data.to_json,
             headers: headers).
-      to_return(status: 200, body: )
+      to_return(status: 200, body: '{}')
+    frontapp.create_link!(data)
   end
 
   it "can update a link name" do
