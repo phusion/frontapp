@@ -213,7 +213,7 @@ RSpec.describe 'Links' do
   it "can get a link" do
     stub_request(:get, "#{base_url}/links/#{link_id}").
       with( headers: headers).
-      to_return(status: 200, body: get_link_response)
+      to_return(status: 200, body: get_link_response.to_json)
     frontapp.get_link(link_id)
   end
 
