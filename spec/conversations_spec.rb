@@ -540,6 +540,14 @@ RSpec.describe 'Conversations' do
     frontapp.conversations
   end
 
+  it "can search conversations" do
+    query = "is:assigned before:1649974320"
+    stub_request(:get, "#{base_url}/conversations/search/#{URI.encode(query)}").
+      with( headers: headers).
+      to_return(status: 200, body: all_conversations_response)
+    frontapp.search_conversations(query)
+  end
+
   it "can get a specific conversation" do
     stub_request(:get, "#{base_url}/conversations/#{conversation_id}").
       with( headers: headers).
