@@ -149,6 +149,9 @@ note = client.add_contact_note!("ctc_55c8c149", {
 # Get all conversations
 conversations = client.conversations
 
+# Search conversations
+conversations = client.search_conversations("is:assigned before:1649974320")
+
 # Get a specific conversation
 converstation = client.get_conversation("cnv_55c8c149")
 
