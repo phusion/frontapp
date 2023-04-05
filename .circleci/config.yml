@@ -1,0 +1,26 @@
+version: 2.1
+
+executors:
+  docker-ruby-test:
+    docker:
+      - image: cimg/ruby:3.0.5
+
+jobs:
+  test:
+    executor: docker-ruby-test
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            bundle install
+      - run:
+          name: Test
+          command: |
+            bundle exec rspec
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - test
