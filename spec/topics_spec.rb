@@ -138,6 +138,7 @@ RSpec.describe 'Topics' do
   }
 
   it "can get all topic conversations" do
+    skip "This endpoint is deprecated"
     stub_request(:get, "#{base_url}/topics/#{topic_id}/conversations").
       with( headers: headers).
       to_return(status: 200, body: topic_conversations_response)
