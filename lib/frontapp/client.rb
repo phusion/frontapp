@@ -19,6 +19,7 @@ require_relative 'client/links.rb'
 require_relative 'client/exports.rb'
 require_relative 'error'
 require_relative 'version'
+require_relative 'utils/http_params.rb'
 
 module Frontapp
   class Client
@@ -39,6 +40,7 @@ module Frontapp
     include Frontapp::Client::Topics
     include Frontapp::Client::Links
     include Frontapp::Client::Exports
+    include Frontapp::Utils::HttpParams
 
     def initialize(options={})
       auth_token = options[:auth_token]
@@ -135,16 +137,14 @@ module Frontapp
       if q && q.is_a?(Hash)
         res << q.map do |k, v|
           case v
-          when Symbol, String
-            "q[#{k}]=#{URI.encode(v)}"
           when Array then
-            v.map { |c| "q[#{k}][]=#{URI.encode(c.to_s)}" }.join("&")
+            v.map { |c| "q[#{k}][]=#{uri_encode(c)}" }.join("&")
           else
-            "q[#{k}]=#{URI.encode(v.to_s)}"
+            "q[#{k}]=#{uri_encode(v)}"
           end
         end
       end
-      res << params.map {|k,v| "#{k}=#{URI.encode(v.to_s)}"}
+      res << params.map {|k,v| "#{k}=#{uri_encode(v)}"}
       res.join("&")
     end
 

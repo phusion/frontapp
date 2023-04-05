@@ -2,12 +2,14 @@ module Frontapp
   class Client
     module Conversations
 
+      include Utils::HttpParams
+
       def conversations(params = {})
         list("conversations", params)
       end
 
       def search_conversations(query, params = {})
-        encoded_query = URI.encode(query)
+        encoded_query = uri_encode(query)
         list("conversations/search/#{encoded_query}", params)
       end
 
