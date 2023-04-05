@@ -6,6 +6,11 @@ module Frontapp
         list("conversations", params)
       end
 
+      def search_conversations(query, params = {})
+        encoded_query = URI.encode(query)
+        list("conversations/search/#{encoded_query}", params)
+      end
+
       # Parameters
       # Name             Type    Description
       # ------------------------------------
