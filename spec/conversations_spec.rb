@@ -542,12 +542,12 @@ RSpec.describe 'Conversations' do
 
   it "can search conversations" do
     stub_request(:get, "#{base_url}/conversations/search/#{
-      URI.encode_www_form_component("\"foo bar\" status:archived")
+      CGI.escape("\"foo bar\" buzz status:archived").gsub("+", "%20")
     }").
       with( headers: headers).
       to_return(status: 200, body: all_conversations_response)
     frontapp.conversations_search(
-      search_text: "foo bar",
+      search_phrases: ["foo bar", "buzz"],
       search_params: { status: "archived" }
     )
   end
