@@ -183,7 +183,7 @@ RSpec.describe 'Links' do
 }
     }
   end
-  let(:create_link_response) {
+  let(:create_link_response) do
     %Q{
 {
   "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_3ij8h"},

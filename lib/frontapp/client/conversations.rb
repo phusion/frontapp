@@ -6,6 +6,32 @@ module Frontapp
         list("conversations", params)
       end
 
+      # Docs: https://dev.frontapp.com/docs/search-1
+      def conversations_search(
+        search_phrases: [],
+        search_params: {},
+        limit: nil,
+        page_token: nil
+      )
+        encoded =
+          [
+            *search_phrases.map { |c| c.include?(" ") ? "\"#{c}\"" : c },
+            *search_params.map { |key, value| "#{key}:#{value}" },
+          ].compact.join(" ")
+
+        if encoded.empty?
+          raise ArgumentError,
+                "You must specify either search_text or search_params"
+        end
+
+        encoded = CGI.escape(encoded).gsub("+", "%20")
+
+        list(
+          "conversations/search/#{encoded}",
+          { limit: limit, page_token: page_token }.compact,
+        )
+      end
+
       # Parameters
       # Name             Type    Description
       # ------------------------------------
