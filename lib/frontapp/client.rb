@@ -79,36 +79,36 @@ module Frontapp
     end
 
     def get_plain(path)
-      res = @connection.get("#{path}", headers: {Accept: "text/plain"})
+      res = @connection.get(path, headers: {Accept: "text/plain"})
       raise Error.from_response(res) unless res.success?
       res.body.to_s
     end
 
     def get_raw(path)
-      res = @connection.get("#{path}")
+      res = @connection.get(path)
       raise Error.from_response(res) unless res.success?
       res.body
     end
 
     def create(path, body)
-      res = @connection.post("#{path}", body: body)
+      res = @connection.post(path, body: body)
       response = JSON.parse(res.body)
       raise Error.from_response(res) unless res.success?
       response
     end
 
     def create_without_response(path, body)
-      res = @connection.post("#{path}", body: body)
+      res = @connection.post(path, body: body)
       raise Error.from_response(res) unless res.success?
     end
 
     def update(path, body)
-      res = @connection.patch("#{path}", body: body)
+      res = @connection.patch(path, body: body)
       raise Error.from_response(res) unless res.success?
     end
 
     def delete(path, body = {})
-      res = @connection.delete("#{path}", body: body)
+      res = @connection.delete(path, body: body)
       raise Error.from_response(res) unless res.success?
     end
 
