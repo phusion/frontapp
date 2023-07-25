@@ -73,7 +73,7 @@ module Frontapp
     end
 
     def get(path)
-      res = @connection.get("#{path}")
+      res = @connection.get(path)
       raise Error.from_response(res) unless res.success?
       JSON.parse(res.body)
     end
