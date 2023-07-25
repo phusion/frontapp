@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files       += Dir.glob("lib/frontapp/utils/*.rb")
   s.homepage    = 'https://github.com/phusion/frontapp'
   s.license     = 'MIT'
-  s.add_dependency 'faraday', '~> 1.4'
+  s.add_dependency 'faraday', '~> 2.6'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'webmock'
   s.add_development_dependency 'rake'

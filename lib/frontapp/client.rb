@@ -43,21 +43,23 @@ module Frontapp
     def initialize(options={})
       auth_token = options[:auth_token]
       user_agent = options[:user_agent] || "Frontapp Ruby Gem #{VERSION}"
-      @connection = Faraday.new(headers: {
-        Accept: "application/json",
-        Authorization: "Bearer #{auth_token}",
-        "User-Agent": user_agent
-      })
+      @connection = Faraday.new(
+        url: base_url,
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer #{auth_token}",
+          "User-Agent": user_agent
+        })
     end
 
     def list(path, params = {})
       items = []
       last_page = false
       query = format_query(params)
-      url = "#{base_url}#{path}?#{query}"
+      url = "#{path}?#{query}"
       until last_page
         res = @connection.get(url)
-        raise Error.from_response(res) unless res.status.success?
+        raise Error.from_response(res) unless res.success?
         response = JSON.parse(res.body)
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]
@@ -71,43 +73,43 @@ module Frontapp
     end
 
     def get(path)
-      res = @connection.get("#{base_url}#{path}")
-      raise Error.from_response(res) unless res.status.success?
+      res = @connection.get("#{path}")
+      raise Error.from_response(res) unless res.success?
       JSON.parse(res.body)
     end
 
     def get_plain(path)
-      res = @connection.get("#{base_url}#{path}", headers: {Accept: "text/plain"})
-      raise Error.from_response(res) unless res.status.success?
+      res = @connection.get("#{path}", headers: {Accept: "text/plain"})
+      raise Error.from_response(res) unless res.success?
       res.body.to_s
     end
 
     def get_raw(path)
-      res = @connection.get("#{base_url}#{path}")
-      raise Error.from_response(res) unless res.status.success?
+      res = @connection.get("#{path}")
+      raise Error.from_response(res) unless res.success?
       res.body
     end
 
     def create(path, body)
-      res = @connection.post("#{base_url}#{path}", body: body)
+      res = @connection.post("#{path}", body: body)
       response = JSON.parse(res.body)
-      raise Error.from_response(res) unless res.status.success?
+      raise Error.from_response(res) unless res.success?
       response
     end
 
     def create_without_response(path, body)
-      res = @connection.post("#{base_url}#{path}", body: body)
-      raise Error.from_response(res) unless res.status.success?
+      res = @connection.post("#{path}", body: body)
+      raise Error.from_response(res) unless res.success?
     end
 
     def update(path, body)
-      res = @connection.patch("#{base_url}#{path}", body: body)
-      raise Error.from_response(res) unless res.status.success?
+      res = @connection.patch("#{path}", body: body)
+      raise Error.from_response(res) unless res.success?
     end
 
     def delete(path, body = {})
-      res = @connection.delete("#{base_url}#{path}", body: body)
-      raise Error.from_response(res) unless res.status.success?
+      res = @connection.delete("#{path}", body: body)
+      raise Error.from_response(res) unless res.success?
     end
 
   private
