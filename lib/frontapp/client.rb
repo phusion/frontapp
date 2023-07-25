@@ -1,5 +1,5 @@
 require 'uri'
-require 'http'
+require 'faraday'
 require 'json'
 require_relative 'client/attachments.rb'
 require_relative 'client/channels.rb'
@@ -43,7 +43,7 @@ module Frontapp
     def initialize(options={})
       auth_token = options[:auth_token]
       user_agent = options[:user_agent] || "Frontapp Ruby Gem #{VERSION}"
-      @headers = HTTP.headers({
+      @connection = Faraday.new(headers: {
         Accept: "application/json",
         Authorization: "Bearer #{auth_token}",
         "User-Agent": user_agent
@@ -56,11 +56,9 @@ module Frontapp
       query = format_query(params)
       url = "#{base_url}#{path}?#{query}"
       until last_page
-        res = @headers.get(url)
-        if !res.status.success?
-          raise Error.from_response(res)
-        end
-        response = JSON.parse(res.to_s)
+        res = @connection.get(url)
+        raise Error.from_response(res) unless res.status == 200
+        response = JSON.parse(res.body)
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]
         if pagination.nil? || pagination["next"].nil?
@@ -73,59 +71,43 @@ module Frontapp
     end
 
     def get(path)
-      res = @headers.get("#{base_url}#{path}")
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
-      JSON.parse(res.to_s)
+      res = @connection.get("#{base_url}#{path}")
+      raise Error.from_response(res) unless res.status == 200
+      JSON.parse(res.body)
     end
 
     def get_plain(path)
-      headers_copy = @headers.dup
-      res = @headers.accept("text/plain").get("#{base_url}#{path}")
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
-      res.to_s
+      res = @connection.get("#{base_url}#{path}", headers: {Accept: "text/plain"})
+      raise Error.from_response(res) unless res.status == 200
+      res.body.to_s
     end
 
     def get_raw(path)
-      headers_copy = @headers.dup
-      res = @headers.get("#{base_url}#{path}")
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
-      res
+      res = @connection.get("#{base_url}#{path}")
+      raise Error.from_response(res) unless res.status == 200
+      res.body
     end
 
     def create(path, body)
-      res = @headers.post("#{base_url}#{path}", json: body)
-      response = JSON.parse(res.to_s)
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
+      res = @connection.post("#{base_url}#{path}", body: body)
+      response = JSON.parse(res.body)
+      raise Error.from_response(res) unless res.status == 200
       response
     end
 
     def create_without_response(path, body)
-      res = @headers.post("#{base_url}#{path}", json: body)
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
+      res = @connection.post("#{base_url}#{path}", body: body)
+      raise Error.from_response(res) unless res.status == 200
     end
 
     def update(path, body)
-      res = @headers.patch("#{base_url}#{path}", json: body)
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
+      res = @connection.patch("#{base_url}#{path}", body: body)
+      raise Error.from_response(res) unless res.status == 200
     end
 
     def delete(path, body = {})
-      res = @headers.delete("#{base_url}#{path}", json: body)
-      if !res.status.success?
-        raise Error.from_response(res)
-      end
+      res = @connection.delete("#{base_url}#{path}", body: body)
+      raise Error.from_response(res) unless res.status == 200
     end
 
   private
