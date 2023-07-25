@@ -3,12 +3,7 @@ require 'frontapp'
 
 RSpec.describe 'Links' do
 
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:link_id) { "top_55c8c149" }
   let(:link_conversations_response) {

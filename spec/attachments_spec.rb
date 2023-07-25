@@ -3,12 +3,7 @@ require 'frontapp'
 
 RSpec.describe 'Attachments' do
 
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:attachment_link_id) { "fil_55c8c149" }
   let(:download_attachment_response) {
