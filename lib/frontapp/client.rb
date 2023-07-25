@@ -56,7 +56,7 @@ module Frontapp
       items = []
       last_page = false
       query = format_query(params)
-      url = "#{path}?#{query}"
+      url = query.empty? ? path : "#{path}?#{query}"
       until last_page
         res = @connection.get(url)
         raise Error.from_response(res) unless res.success?
