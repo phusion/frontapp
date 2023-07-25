@@ -57,7 +57,7 @@ module Frontapp
       url = "#{base_url}#{path}?#{query}"
       until last_page
         res = @connection.get(url)
-        raise Error.from_response(res) unless res.status == 200
+        raise Error.from_response(res) unless res.status.success?
         response = JSON.parse(res.body)
         items.concat(response["_results"]) if response["_results"]
         pagination = response["_pagination"]
@@ -72,42 +72,42 @@ module Frontapp
 
     def get(path)
       res = @connection.get("#{base_url}#{path}")
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
       JSON.parse(res.body)
     end
 
     def get_plain(path)
       res = @connection.get("#{base_url}#{path}", headers: {Accept: "text/plain"})
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
       res.body.to_s
     end
 
     def get_raw(path)
       res = @connection.get("#{base_url}#{path}")
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
       res.body
     end
 
     def create(path, body)
       res = @connection.post("#{base_url}#{path}", body: body)
       response = JSON.parse(res.body)
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
       response
     end
 
     def create_without_response(path, body)
       res = @connection.post("#{base_url}#{path}", body: body)
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
     end
 
     def update(path, body)
       res = @connection.patch("#{base_url}#{path}", body: body)
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
     end
 
     def delete(path, body = {})
       res = @connection.delete("#{base_url}#{path}", body: body)
-      raise Error.from_response(res) unless res.status == 200
+      raise Error.from_response(res) unless res.status.success?
     end
 
   private
