@@ -7,4 +7,4 @@ vendor
 
 # ignore RVM config
 .versions.conf
-
+.ruby-version
