@@ -198,6 +198,15 @@ RSpec.describe 'Links' do
     frontapp.get_link_conversations(link_id)
   end
 
+  it "can get all topic conversations" do
+    # Topics are deprecated
+    # get_topic_conversations is an alias to get_link_conversations
+    stub_request(:get, "#{base_url}/links/#{link_id}/conversations").
+      with( headers: headers).
+      to_return(status: 200, body: link_conversations_response)
+    frontapp.get_topic_conversations(link_id)
+  end
+
   it "can list links" do
     stub_request(:get, "#{base_url}/links").
       with( headers: headers).
