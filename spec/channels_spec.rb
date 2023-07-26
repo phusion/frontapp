@@ -3,12 +3,7 @@ require 'frontapp'
 
 RSpec.describe 'Channels' do
 
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:channel_id) { "cha_55c8c149" }
   let(:inbox_id) { "inb_55c8c149" }

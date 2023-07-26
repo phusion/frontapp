@@ -3,12 +3,7 @@ require 'frontapp'
 
 RSpec.describe 'Links' do
 
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:link_id) { "top_55c8c149" }
   let(:link_conversations_response) {
@@ -174,7 +169,7 @@ RSpec.describe 'Links' do
   let(:get_link_response) do
     %Q{
 {
-  "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_55c8c149"},
+  "_links": {"self": "https://lending-home.api.frontapp.com/links/top_55c8c149"},
   "id": "top_55c8c149",
   "name": "123456",
   "type": "web",
@@ -186,7 +181,7 @@ RSpec.describe 'Links' do
   let(:create_link_response) do
     %Q{
 {
-  "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_3ij8h"},
+  "_links": {"self": "https://lending-home.api.frontapp.com/links/top_3ij8h"},
   "id": "top_3ij8h",
   "name": "Bla",
   "type": "web",
@@ -201,6 +196,15 @@ RSpec.describe 'Links' do
       with( headers: headers).
       to_return(status: 200, body: link_conversations_response)
     frontapp.get_link_conversations(link_id)
+  end
+
+  it "can get all topic conversations" do
+    # Topics are deprecated
+    # get_topic_conversations is an alias to get_link_conversations
+    stub_request(:get, "#{base_url}/links/#{link_id}/conversations").
+      with( headers: headers).
+      to_return(status: 200, body: link_conversations_response)
+    frontapp.get_topic_conversations(link_id)
   end
 
   it "can list links" do
@@ -225,7 +229,7 @@ RSpec.describe 'Links' do
     stub_request(:post, "#{base_url}/links").
       with( body: data.to_json,
             headers: headers).
-      to_return(status: 200, body: )
+      to_return(status: 200)
   end
 
   it "can update a link name" do

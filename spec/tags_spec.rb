@@ -3,12 +3,7 @@ require 'frontapp'
 
 RSpec.describe 'Tags' do
 
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:tag_id) { "tag_55c8c149" }
   let(:all_tags_response) {
@@ -204,14 +199,14 @@ RSpec.describe 'Tags' do
       to_return(status: 201, body: create_tag_response)
     frontapp.create_tag!(data)
   end
-  
+
   it "can delete a tag" do
     stub_request(:delete, "#{base_url}/tags/#{tag_id}").
       with( headers: headers).
       to_return(status: 204, body: nil)
     frontapp.delete_tag!(tag_id)
   end
-  
+
 
   it "can get all tag conversations" do
     stub_request(:get, "#{base_url}/tags/#{tag_id}/conversations").

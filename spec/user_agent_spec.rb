@@ -2,12 +2,7 @@ require 'spec_helper'
 require 'frontapp'
 
 RSpec.describe 'User agent' do
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:create_tag_data) {
     {name: "New tag name"}
   }

@@ -3,12 +3,7 @@ require 'frontapp'
 
 RSpec.describe 'Contact Groups' do
 
-  let(:headers) {
-    {
-      "Accept" => "application/json",
-      "Authorization" => "Bearer #{auth_token}",
-    }
-  }
+  let(:headers) { json_headers }
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:contact_group_id) { "grp_55c8c149" }
   let(:all_contact_groups_response) {
