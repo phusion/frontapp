@@ -79,7 +79,10 @@ module Frontapp
     end
 
     def get_plain(path)
-      res = @connection.get(path, headers: {Accept: "text/plain"})
+      res = @connection.get path do |req|
+        req.headers[:accept] = 'text/plain'
+      end
+
       raise Error.from_response(res) unless res.success?
       res.body.to_s
     end
