@@ -91,24 +91,36 @@ module Frontapp
     end
 
     def create(path, body)
-      res = @connection.post(path, body: body)
-      response = JSON.parse(res.body)
+      res = @connection.post path do |req|
+        req.headers[:content_type] = 'application/json'
+        req.body = body.to_json
+      end
+
       raise Error.from_response(res) unless res.success?
-      response
+      JSON.parse(res.body)
     end
 
     def create_without_response(path, body)
-      res = @connection.post(path, body: body)
+      res = @connection.post path do |req|
+           req.headers[:content_type] = 'application/json'
+           req.body = body.to_json
+         end
       raise Error.from_response(res) unless res.success?
     end
 
     def update(path, body)
-      res = @connection.patch(path, body: body)
+      res = @connection.patch path do |req|
+        req.headers[:content_type] = 'application/json'
+        req.body = body.to_json
+      end
       raise Error.from_response(res) unless res.success?
     end
 
     def delete(path, body = {})
-      res = @connection.delete(path, body: body)
+      res = @connection.delete path do |req|
+        req.headers[:content_type] = 'application/json'
+        req.body = body.to_json
+      end
       raise Error.from_response(res) unless res.success?
     end
 
