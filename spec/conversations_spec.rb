@@ -526,7 +526,36 @@ RSpec.describe 'Conversations' do
 }
     }
   }
-
+  let(:get_create_discussion_conversation_response) {
+  %{
+{
+  "_links": {
+    "self": "https://api2.frontapp.com/conversations/cnv_13nj1zf8",
+    "related": {
+      "events": "https://api2.frontapp.com/conversations/cnv_13nj1zf8/events",
+      "followers": "https://api2.frontapp.com/conversations/cnv_13nj1zf8/followers",
+      "messages": "https://api2.frontapp.com/conversations/cnv_13nj1zf8/messages",
+      "comments": "https://api2.frontapp.com/conversations/cnv_13nj1zf8/comments",
+      "inboxes": "https://api2.frontapp.com/conversations/cnv_13nj1zf8/inboxes",
+      "last_message": null
+    }
+  },
+  "id": "cnv_13nj1zf8",
+  "subject": "Pizza delivery",
+  "status": "unassigned",
+  "assignee": null,
+  "recipient": null,
+  "tags": [],
+  "links": [],
+  "custom_fields": {},
+  "created_at": 1716412385.764,
+  "waiting_since": 1716412385.764,
+  "is_private": false,
+  "scheduled_reminders": [],
+  "metadata": {}
+}
+  }
+}
 
   it "can list all conversations" do
     stub_request(:get, "#{base_url}/conversations").
@@ -644,5 +673,21 @@ RSpec.describe 'Conversations' do
       with( headers: headers).
       to_return(status: 202)
     frontapp.add_conversation_followers!(conversation_id, data)
+  end
+
+  it "can create a discussion conversation" do
+    data = {
+      type: "discussion",
+      teammate_ids: ["tea_64ue9"],
+      subject: "Pizza delivery",
+      comment: {
+        body: "Pizza delivery for I.C. Wiener"
+      }
+    }
+
+    stub_request(:post, "#{base_url}/conversations").
+      with(headers: headers).
+      to_return(status: 201, body: get_create_discussion_conversation_response)
+    frontapp.create_discussion_conversation!(data)
   end
 end
