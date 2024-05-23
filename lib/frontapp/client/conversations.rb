@@ -141,6 +141,20 @@ module Frontapp
         cleaned = params.permit(:teammate_ids)
         create_without_response("conversations/#{conversation_id}/followers", cleaned)
       end
+
+      # https://dev.frontapp.com/reference/create-conversation
+      # Parameters
+      # Name             Type              Description
+      # ----------------------------------------------
+      # type             string            Type of the conversation. Can be "discussion" (required)
+      # inbox_id         string            ID of the inbox where the conversation will be created, Either inbox_id OR teammate_ids must be provided (not both).
+      # teammate_ids     array of strings  IDs of the teammates participating in the conversation. Either inbox_id OR teammate_ids must be provided (not both).
+      # subject          string            Subject of the conversation (required)
+      # comment          object            First comment of the conversation (required) {author_id: string, body: string, [attachments: array of objects]}
+      def create_discussion_conversation!(params = {})
+        cleaned = params.permit(:type, :inbox_id, :teammate_ids, :subject, :comment)
+        create("conversations", cleaned)
+      end
     end
   end
 end
