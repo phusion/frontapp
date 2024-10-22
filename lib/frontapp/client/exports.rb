@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Exports
 
-      def exports(params = {})
-        list("exports", params)
+      def exports(params = {}, &)
+        list("exports", params, &)
       end
 
       # Parameters

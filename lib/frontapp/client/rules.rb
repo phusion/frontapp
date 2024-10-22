@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Rules
 
-      def rules(params = {})
-        list("rules", params)
+      def rules(params = {}, &)
+        list("rules", params, &)
       end
 
       # Parameters

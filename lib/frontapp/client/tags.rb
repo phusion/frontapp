@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Tags
 
-      def tags(params = {})
-        list("tags", params)
+      def tags(params = {}, &)
+        list("tags", params, &)
       end
 
       # Parameters
@@ -14,7 +14,7 @@ module Frontapp
       def get_tag(tag_id)
         get("tags/#{tag_id}")
       end
-      
+
       # Allowed attributes:
       # Name  Type    Description
       # -------------------------
@@ -34,14 +34,14 @@ module Frontapp
       # Allowed params:
       # Name        Type               Description
       # ----------------------------------------------
-      # q           object (optional)  Search query. 
+      # q           object (optional)  Search query.
       # q.statuses  array (optional)   List of the statuses of the conversations you want to list
       # ----------------------------------------------
-      def get_tag_conversations(tag_id, params = {})
+      def get_tag_conversations(tag_id, params = {}, &)
         cleaned = params.permit({ q: [:statuses] })
-        list("tags/#{tag_id}/conversations", cleaned)
+        list("tags/#{tag_id}/conversations", cleaned, &)
       end
-      
+
       # Parameters
       # Name    Type    Description
       # ---------------------------
@@ -50,7 +50,7 @@ module Frontapp
       def delete_tag!(tag_id)
         delete("tags/#{tag_id}")
       end
-      
+
     end
   end
 end
