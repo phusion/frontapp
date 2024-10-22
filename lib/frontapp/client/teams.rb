@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Teams
 
-      def teams(params = {})
-        list("teams", params)
+      def teams(params = {}, &)
+        list("teams", params, &)
       end
 
       # Parameters

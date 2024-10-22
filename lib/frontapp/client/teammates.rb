@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Teammates
 
-      def teammates(params = {})
-        list("teammates", params)
+      def teammates(params = {}, &)
+        list("teammates", params, &)
       end
 
       # Parameters
@@ -47,9 +47,9 @@ module Frontapp
       # q           object (optional)  Search query.
       # q.statuses  array (optional)   List of the statuses of the conversations you want to list
       # ----------------------------------------------
-      def get_teammate_conversations(teammate_id, params = {})
+      def get_teammate_conversations(teammate_id, params = {}, &)
         cleaned = params.permit({ q: [:statuses] })
-        list("teammates/#{teammate_id}/conversations", cleaned)
+        list("teammates/#{teammate_id}/conversations", cleaned, &)
       end
 
       # Parameters

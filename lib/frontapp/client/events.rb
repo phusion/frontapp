@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Events
 
-      def events(params = {})
-        list("events", params)
+      def events(params = {}, &)
+        list("events", params, &)
       end
 
       # Parameters

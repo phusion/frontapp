@@ -55,9 +55,9 @@ module Frontapp
       # q           object (optional)  Search query.
       # q.statuses  array (optional)   List of the statuses of the conversations you want to list
       # ------------------------------------------
-      def get_link_conversations(link_id, params = {})
+      def get_link_conversations(link_id, params = {}, &)
         cleaned = params.permit({ q: [:statuses] })
-        list("links/#{link_id}/conversations", cleaned)
+        list("links/#{link_id}/conversations", cleaned, &)
       end
     end
   end

@@ -1,22 +1,22 @@
 require 'uri'
 require 'faraday'
 require 'json'
-require_relative 'client/attachments.rb'
-require_relative 'client/channels.rb'
-require_relative 'client/comments.rb'
-require_relative 'client/contact_groups.rb'
-require_relative 'client/contacts.rb'
-require_relative 'client/conversations.rb'
-require_relative 'client/events.rb'
-require_relative 'client/inboxes.rb'
-require_relative 'client/messages.rb'
-require_relative 'client/rules.rb'
-require_relative 'client/tags.rb'
-require_relative 'client/teammates.rb'
-require_relative 'client/teams.rb'
-require_relative 'client/topics.rb'
-require_relative 'client/links.rb'
-require_relative 'client/exports.rb'
+require_relative 'client/attachments'
+require_relative 'client/channels'
+require_relative 'client/comments'
+require_relative 'client/contact_groups'
+require_relative 'client/contacts'
+require_relative 'client/conversations'
+require_relative 'client/events'
+require_relative 'client/inboxes'
+require_relative 'client/messages'
+require_relative 'client/rules'
+require_relative 'client/tags'
+require_relative 'client/teammates'
+require_relative 'client/teams'
+require_relative 'client/topics'
+require_relative 'client/links'
+require_relative 'client/exports'
 require_relative 'error'
 require_relative 'version'
 
@@ -52,23 +52,31 @@ module Frontapp
         })
     end
 
-    def list(path, params = {})
-      items = []
-      last_page = false
+    def list(path, params = {}, &block)
+      paginate = params.delete(:paginate)
+      paginate = true if paginate.nil?
+
+      items = block ? nil : []
+
       query = format_query(params)
       url = query.empty? ? path : "#{path}?#{query}"
-      until last_page
+
+      while url
         res = @connection.get(url)
         raise Error.from_response(res) unless res.success?
         response = JSON.parse(res.body)
-        items.concat(response["_results"]) if response["_results"]
-        pagination = response["_pagination"]
-        if pagination.nil? || pagination["next"].nil?
-          last_page = true
-        else
-          url = pagination["next"]
+        results = response["_results"] || []
+        url = paginate ? response["_pagination"]&.dig("next") : nil
+
+        unless results.empty?
+          if items
+            items.concat(results)
+          else
+            block.call(results)
+          end
         end
       end
+
       items
     end
 
@@ -127,8 +135,7 @@ module Frontapp
       raise Error.from_response(res) unless res.success?
     end
 
-  private
-    def format_query(params)
+    private def format_query(params)
       res = []
       q = params.delete(:q)
       if q && q.is_a?(Hash)
@@ -136,7 +143,7 @@ module Frontapp
           case v
           when Symbol, String
             "q[#{k}]=#{URI.encode_www_form_component(v)}"
-          when Array then
+          when Array
             v.map { |c| "q[#{k}][]=#{URI.encode_www_form_component(c.to_s)}" }.join("&")
           else
             "q[#{k}]=#{URI.encode_www_form_component(v.to_s)}"
@@ -147,7 +154,7 @@ module Frontapp
       res.join("&")
     end
 
-    def base_url
+    private def base_url
       "https://api2.frontapp.com/"
     end
 

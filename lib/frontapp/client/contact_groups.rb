@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module ContactGroups
 
-      def contact_groups(params = {})
-        list("contact_groups", params)
+      def contact_groups(params = {}, &)
+        list("contact_groups", params, &)
       end
 
       # Allowed attributes:

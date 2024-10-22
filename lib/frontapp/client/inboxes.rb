@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Inboxes
 
-      def inboxes(params = {})
-        list("inboxes", params)
+      def inboxes(params = {}, &)
+        list("inboxes", params, &)
       end
 
       # Parameters
@@ -44,12 +44,12 @@ module Frontapp
       # Allowed attributes:
       # Name        Type               Description
       # ----------------------------------------------
-      # q           object (optional)  Search query. 
+      # q           object (optional)  Search query.
       # q.statuses  array (optional)   List of the statuses of the conversations you want to list
       # ----------------------------------------------
-      def get_inbox_conversations(inbox_id, params = {})
+      def get_inbox_conversations(inbox_id, params = {}, &)
         cleaned = params.permit({ q: [:statuses] })
-        list("inboxes/#{inbox_id}/conversations", cleaned)
+        list("inboxes/#{inbox_id}/conversations", cleaned, &)
       end
 
       # Parameters

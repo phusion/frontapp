@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Conversations
 
-      def conversations(params = {})
-        list("conversations", params)
+      def conversations(params = {}, &)
+        list("conversations", params, &)
       end
 
       # Docs: https://dev.frontapp.com/docs/search-1
@@ -11,7 +11,8 @@ module Frontapp
         search_phrases: [],
         search_params: {},
         limit: nil,
-        page_token: nil
+        page_token: nil,
+        &
       )
         encoded =
           [
@@ -29,6 +30,7 @@ module Frontapp
         list(
           "conversations/search/#{encoded}",
           { limit: limit, page_token: page_token }.compact,
+          &
         )
       end
 
@@ -84,8 +86,8 @@ module Frontapp
       # --------------------------------
       # conversation_id  string  Id or email of the requested conversation
       # --------------------------------
-      def get_conversation_events(conversation_id)
-        list("conversations/#{conversation_id}/events")
+      def get_conversation_events(conversation_id, params = {}, &)
+        list("conversations/#{conversation_id}/events", params, &)
       end
 
       # Parameters
@@ -93,8 +95,8 @@ module Frontapp
       # --------------------------------
       # conversation_id  string  Id or email of the requested conversation
       # --------------------------------
-      def get_conversation_messages(conversation_id)
-        list("conversations/#{conversation_id}/messages")
+      def get_conversation_messages(conversation_id, params = {}, &)
+        list("conversations/#{conversation_id}/messages", params, &)
       end
 
       # Parameters

@@ -24,8 +24,8 @@ module Frontapp
       # ------------------------------------
       # conversation_id  string  Id of the requested conversation
       # ------------------------------------
-      def get_conversation_comments(conversation_id)
-        list("conversations/#{conversation_id}/comments")
+      def get_conversation_comments(conversation_id, params = {}, &)
+        list("conversations/#{conversation_id}/comments", params, &)
       end
 
       # Parameters
