@@ -41,4 +41,11 @@ RSpec.describe 'Client' do
     expect(results).to eq([result_1, result_2])
   end
 
+  it "can list with params" do
+    stub_request(:get, "#{base_url}/conversations?page=2").
+      with(headers: headers).
+      to_return(status: 200, body: JSON.generate(response_2))
+    results = frontapp.conversations(page: 2)
+    expect(results).to eq([result_2])
+  end
 end
