@@ -61,7 +61,13 @@ module Frontapp
           raise Error.from_response(res)
         end
         response = JSON.parse(res.to_s)
-        items.concat(response["_results"]) if response["_results"]
+
+        if block_given?
+          yield(response)
+        else
+          items.concat(response["_results"]) if response["_results"]
+        end
+
         pagination = response["_pagination"]
         if pagination.nil? || pagination["next"].nil?
           last_page = true

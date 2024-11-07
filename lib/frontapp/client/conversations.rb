@@ -2,8 +2,8 @@ module Frontapp
   class Client
     module Conversations
 
-      def conversations(params = {})
-        list("conversations", params)
+      def conversations(params = {}, &block)
+        list("conversations", params, &block)
       end
 
       # Parameters
