@@ -35,8 +35,8 @@ RSpec.describe 'Client' do
       with(headers: headers).
       to_return(status: 200, body: JSON.generate(response_2))
     results = []
-    frontapp.conversations do |response|
-      results.concat(response["_results"])
+    frontapp.conversations do |conversations|
+      results.concat(converations)
     end
     expect(results).to eq([result_1, result_2])
   end

@@ -63,7 +63,7 @@ module Frontapp
         response = JSON.parse(res.to_s)
 
         if block_given?
-          yield(response)
+          yield(response["_results"])
         else
           items.concat(response["_results"]) if response["_results"]
         end
