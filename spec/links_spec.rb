@@ -12,7 +12,7 @@ RSpec.describe 'Links' do
   let(:frontapp) { Frontapp::Client.new(auth_token: auth_token) }
   let(:link_id) { "top_55c8c149" }
   let(:link_conversations_response) {
-    %Q{
+<<~JSON
 {
   "_pagination": {},
   "_links": {
@@ -134,10 +134,10 @@ RSpec.describe 'Links' do
     }
   ]
 }
-    }
+JSON
   }
   let(:links_response) do
-    %Q{
+<<~JSON
 {
   "_pagination": {
     "next": null
@@ -169,31 +169,31 @@ RSpec.describe 'Links' do
     }
   ]
 }
-    }
+JSON
   end
   let(:get_link_response) do
-    %Q{
+  <<~JSON
 {
-  "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_55c8c149"},
+  "_links": {"self": "https://lending-home.api.frontapp.com/links/top_55c8c149"},
   "id": "top_55c8c149",
   "name": "123456",
   "type": "web",
   "external_url": "https://example.com/something/123456",
   "link": "https://example.com/something/123456"
 }
-    }
+JSON
   end
-  let(:create_link_response) {
-    %Q{
+  let(:create_link_response) do
+<<~JSON
 {
-  "_links"=>{"self"=>"https://lending-home.api.frontapp.com/links/top_3ij8h"},
+  "_links": {"self": "https://lending-home.api.frontapp.com/links/top_3ij8h"},
   "id": "top_3ij8h",
   "name": "Bla",
   "type": "web",
   "external_url": "bla.io",
   "link": "bla.io"
 }
-    }
+JSON
   end
 
   it "can get all link conversations" do
@@ -225,7 +225,7 @@ RSpec.describe 'Links' do
     stub_request(:post, "#{base_url}/links").
       with( body: data.to_json,
             headers: headers).
-      to_return(status: 200, body: )
+      to_return(status: 200, body: create_link_response)
   end
 
   it "can update a link name" do
