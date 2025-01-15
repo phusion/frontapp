@@ -12,9 +12,11 @@ module Frontapp
       error_class.new(response)
     end
 
+    attr_reader :response
+
     def initialize(response)
       @response = response
-      super("Response: #{response.inspect}\nBody: #{response.body}")
+      super("Response Body: #{response.body}")
     end
   end
 
