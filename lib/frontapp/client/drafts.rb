@@ -13,9 +13,6 @@ module Frontapp
           :body,
           :quote_body,
           :attachments,
-          {
-            options: [:tags, :archive],
-          },
           :mode,
           :signature_id,
           :should_add_default_signature,
