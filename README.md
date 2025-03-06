@@ -396,6 +396,7 @@ client.update_link!("top_55c8c149", { name: "Something new" })
 # Get all conversations for a link
 # Optionally include a filter for conversation statuses
 conversations = client.get_link_conversations("top_55c8c149", { q: { statuses: ["assigned", "unassigned"] } })
+```
 
 ### Exports
 ```ruby
