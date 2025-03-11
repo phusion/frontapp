@@ -111,3 +111,10 @@ end
 def auth_token
   ""
 end
+
+def standard_headers
+  {
+    "Accept" => "application/json",
+    "Authorization" => "Bearer #{auth_token}",
+  }
+end

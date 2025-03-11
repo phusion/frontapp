@@ -10,7 +10,7 @@ module Frontapp
       def get_message(message_id)
         get("messages/#{message_id}")
       end
-      
+
       # Parameters
       # Name        Type    Description
       # -------------------------------
@@ -20,7 +20,7 @@ module Frontapp
         get_plain("messages/#{message_id}").b
         # .b sets encoding to ASCII-8BIT, which is safer for raw emails than UTF-8
       end
-      
+
       # Parameters
       # Name        Type    Description
       # -------------------------------

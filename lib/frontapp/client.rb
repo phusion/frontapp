@@ -7,6 +7,7 @@ require_relative 'client/comments.rb'
 require_relative 'client/contact_groups.rb'
 require_relative 'client/contacts.rb'
 require_relative 'client/conversations.rb'
+require_relative 'client/drafts.rb'
 require_relative 'client/events.rb'
 require_relative 'client/inboxes.rb'
 require_relative 'client/messages.rb'
@@ -29,6 +30,7 @@ module Frontapp
     include Frontapp::Client::ContactGroups
     include Frontapp::Client::Contacts
     include Frontapp::Client::Conversations
+    include Frontapp::Client::Drafts
     include Frontapp::Client::Events
     include Frontapp::Client::Inboxes
     include Frontapp::Client::Messages
