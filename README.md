@@ -436,3 +436,4 @@ Special thanks to:
 - [thechrisoshow](https://github.com/thechrisoshow)
 - [feolea](https://github.com/feolea)
 - [jefferal1995](https://github.com/jefferal1995)
+- [panozzaj](https://github.com/panozzaj)
